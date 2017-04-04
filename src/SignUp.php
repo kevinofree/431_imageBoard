@@ -23,7 +23,6 @@ if(isset($_POST['submit'])){
 <html>
   <head>
     <title>Registration Page</title>
-    <link rel="stylesheet" href="../public/css/style.css" type="text/css">
   </head>
   <body>
     <div class='container'>
