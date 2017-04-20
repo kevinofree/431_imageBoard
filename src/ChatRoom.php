@@ -6,13 +6,18 @@
   </head>
   <body>
     <?php include "Navbar.php"; ?>
-    <div class="container-fluid">
-      <div class="jumbotron">
-        <h1>Welcome to GyroChan!</h1>
-        <p class="lead">If you don't have an account, please <a href="SignUp.php">register</a></p>
-      </div>
-      <hr>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <input class="" type="text" id="chat" >
+          <button id="sendMessage" class="" type="submit">Send</button>
+        </div>
+     </div>
     </div>
+
+
+
     <?php include "Scripts.php"; ?>
   </body>
 </html>
