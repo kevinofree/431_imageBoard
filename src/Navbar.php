@@ -1,31 +1,48 @@
-<html>
-  <head>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-  </head>
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <p class="navbar-brand">GyroChan</p>
-        <ul class="nav navbar-nav">
-          <li><a href="index.php">Home</a></li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Boards
-            <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Anime</a></li>
-              <li><a href="#">Food and Cooking</a></li>
-              <li><a href="#">Video Games</a></li>
-              <li><a href="#">Paranormal</a></li>
-            </ul>
-          </li>
-          <li><a href="">Rules</a></li>
-          <li><a href="">FAQ</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="SignUp.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.php">GyroChan</a>
     </div>
-  </nav>
-</html>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Rules</a></li>
+        <li><a href="">FAQ</a></li>
+        <li><a href="SignUp.php">Register</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boards <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Anime</a></li>
+            <li><a href="#">Food and Cooking</a></li>
+            <li><a href="#">Video Games</a></li>
+            <li><a href="#">Cars</a></li>
+            <li><a href="#">Paranormal</a></li>
+            <li><a href="#">Randomness</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Nav header</li>
+            <li><a href="#">Separated link</a></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <form class="navbar-form navbar-right" method="post" action="/users/login">
+        <div class="form-group">
+          <input type="text" placeholder="Username" class="form-control" name="username">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password" class="form-control" name="password">
+        </div>
+        <button type="submit" class="btn btn-success">Login</button>
+      </form>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+<br><br><br><br>
