@@ -1,5 +1,5 @@
 <?php require_once('./database/open-connection.php'); ?>
-<?php require_once('./database/database-queries.php'); ?>
+<?php require_once('./database/queries.php'); ?>
 
 <!DOCTYPE html>
 <html lang="en">

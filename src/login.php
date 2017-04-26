@@ -1,35 +1,5 @@
 <?php require_once('./database/open-connection.php'); ?>
 <?php require_once('./database/queries.php'); ?>
-
-<?php
-
-  if(isset($_POST['submit']))
-  {
-    // Get form data
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $fullname = $_POST['fullname'];
-
-    // New default user
-    $status = 0;
-
-    // Call register new user query
-    $new_user = register_user_query($username, $password, $fullname, $status);
-
-    // Perform the query to the database
-    $result = mysqli_query($connectioin, $new_user);
-
-    // Check if the query contained any errors
-    if($result)
-    {
-      echo "<p>New account created. Sign in to your new account.</p><br />";
-    }
-    else
-    {
-      echo "<p style='color:red'>Username taken. Try a different one.</p>";
-    }
-  }
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
