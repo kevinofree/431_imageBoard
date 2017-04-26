@@ -14,5 +14,17 @@
     return $query;
   }
 
+  // Search for the users credentials
+  function authenticate_user_query($username, $password)
+  {
+    // Encrypt password using MD5 algorithm
+    $hash = md5($password);
+
+    $query  = "SELECT * ";
+    $query .= "FROM USER ";
+    $query .= "WHERE username = '{$username}' AND password = '{$hash}';";
+    return $query;
+  }
+
 
 ?>
