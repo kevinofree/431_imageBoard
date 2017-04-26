@@ -16,8 +16,8 @@ CREATE TABLE MAILBOX
   MsgDate DateTime NOT NULL,
   Sender varchar(20) NOT NULL,
   Receiver varchar(20) NOT NULL,
-  FOREIGN KEY (Receiver) REFERENCES USER(Username),
-  FOREIGN KEY (Sender) REFERENCES USER(Username)
+  FOREIGN KEY (Receiver) REFERENCES USER(username),
+  FOREIGN KEY (Sender) REFERENCES USER(username)
 );
 
 CREATE TABLE CHATROOM

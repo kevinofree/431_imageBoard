@@ -1,3 +1,5 @@
+<?php require_once('./include/sessions.php') ?>
+
 <!-- Fixed navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
@@ -33,15 +35,21 @@
         </li>
         <li><a href="#">Contact</a></li>
       </ul>
-      <form class="navbar-form navbar-right" method="post" action="/users/login">
-        <div class="form-group">
-          <input type="text" placeholder="Username" class="form-control" name="username">
-        </div>
-        <div class="form-group">
-          <input type="password" placeholder="Password" class="form-control" name="password">
-        </div>
-        <button type="submit" class="btn btn-success">Login</button>
-      </form>
+      <?php
+        if(!isset($_SESSION['register_page']))
+        { ?>
+
+          <form class="navbar-form navbar-right" method="post" action="/users/login">
+            <div class="form-group">
+              <input type="text" placeholder="Username" class="form-control" name="username">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" name="password">
+            </div>
+            <button type="submit" class="btn btn-success">Login</button>
+          </form>
+
+      <?php }?>
     </div><!--/.nav-collapse -->
   </div>
 </nav>

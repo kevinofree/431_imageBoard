@@ -1,9 +1,11 @@
 <?php
   // Creating database connection
     $dbhost = "localhost";
-    $dbuser = "root";
-    $dbpass = "strobe";
+    $dbuser = "noe";
+    $dbpass = "messier_108";
     $dbname = "GyroChan";
+
+    // Connect to database
     $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
     // Test if the database connection occurred

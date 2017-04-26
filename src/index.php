@@ -1,3 +1,4 @@
+<?php require_once('./include/sessions.php'); ?>
 <?php require_once('./database/open-connection.php'); ?>
 <?php require_once('./database/queries.php'); ?>
 
