@@ -1,10 +1,10 @@
 CREATE TABLE USER
 (
-  Username varchar(20) NOT NULL UNIQUE,
-  Password varchar(20) NOT NULL,
-  FullName varchar(30) NOT NULL,
-  Status int,
-  PRIMARY KEY (Username)
+  username varchar(32) NOT NULL UNIQUE,
+  password varchar(32) NOT NULL,
+  fullname varchar(64) NOT NULL,
+  status tinyint NOT NULL,
+  PRIMARY KEY (username)
 );
 
 CREATE TABLE MAILBOX

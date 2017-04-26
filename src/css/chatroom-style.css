@@ -1,0 +1,40 @@
+.col-md-3 {
+}
+
+.col-md-8 {
+  height: 500px;
+}
+
+table {
+ border: 1px solid #D5D8DC;
+}
+
+th, tr {
+  text-align: center;
+}
+
+th {
+  font-size: 15px;
+  color: #2980B9;
+}
+
+.panel-body {
+  height: 75%;
+}
+
+.page-header {
+  margin-top: 0%;
+}
+
+.glyphicon-ok-sign {
+  color: #27AE60;
+}
+
+.connected-user {
+
+}
+
+.panel-heading {
+  font-weight: bold;
+  font-size: 15px;
+}
