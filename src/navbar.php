@@ -1,5 +1,62 @@
-<?php require_once('./include/sessions.php') ?>
+<?php require_once('./include/sessions.php'); ?>
+<?php require_once('./database/open-connection.php'); ?>
+<?php require_once('./database/queries.php'); ?>
+<?php require_once('./include/functions.php'); ?>
+<?php
 
+  // Used for session store and html entities in the form
+  $username = "";
+
+  // If login in form has been submitted
+  if(isset($_POST['login-submit']))
+  {
+    // Get the users credentials
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Create database query
+    $query = authenticate_user_query($username, $password);
+
+    // Perform the query on the database
+    $result = mysqli_query($connection, $query);
+
+    // Return the results from the database in a associative array
+    $user_credentials = mysqli_fetch_assoc($result);
+
+    // Check if the query has an error
+    if (!$result)
+    {
+      die("Database query failed. " . mysqli_error($connection));
+    }
+
+    // Hash the user's password for comparison
+    $hash = md5($password);
+
+    // Check credential matches
+    if($user_credentials['username'] === $username &&
+      $user_credentials['password'] === $hash)
+    {
+      // Store username in session
+      $_SESSION['username'] = $user_credentials['username'];
+
+      // Release returned data
+      mysqli_free_result($result);
+
+      // Set a session for username once the user credentials match
+      $_SESSION['username'] = username;
+
+      // Access granted. Redirect to the users dashboard
+      redirect_to('dashboard.php');
+
+    }
+    else
+    {
+      // If the user enters the wrong username or password, send a fail message to the client
+      $_SESSION['fail_message'] = 'Invalid username or password, please try again.';
+    }
+
+  }
+?>
 <!-- Fixed navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
@@ -44,7 +101,7 @@
           <div class="form-group">
             <input type="password" placeholder="Password" class="form-control" name="password">
           </div>
-          <button type="submit" class="btn btn-success">Login</button>
+          <button type="submit" name="login-submit" class="btn btn-success">Login</button>
         </form>
 
       <?php } ?>
