@@ -35,21 +35,28 @@
         </li>
         <li><a href="#">Contact</a></li>
       </ul>
-      <?php
-        if(!isset($_SESSION['register_page']))
-        { ?>
+      <?php if(!isset($_SESSION['register_page']) && !isset($_SESSION['username'])) { ?>
 
-          <form class="navbar-form navbar-right" method="post" action="/users/login">
-            <div class="form-group">
-              <input type="text" placeholder="Username" class="form-control" name="username">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" name="password">
-            </div>
-            <button type="submit" class="btn btn-success">Login</button>
-          </form>
+        <form class="navbar-form navbar-right" method="POST">
+          <div class="form-group">
+            <input type="text" placeholder="Username" class="form-control" name="username">
+          </div>
+          <div class="form-group">
+            <input type="password" placeholder="Password" class="form-control" name="password">
+          </div>
+          <button type="submit" class="btn btn-success">Login</button>
+        </form>
 
-      <?php }?>
+      <?php } ?>
+
+      <?php if(isset($_SESSION['username'])) { ?>
+
+        <form class="navbar-form navbar-right" method="POST" action="logout.php">
+          <button type="submit" class="btn btn-success">Logout</button>
+        </form>
+
+      <?php } ?>
+
     </div><!--/.nav-collapse -->
   </div>
 </nav>

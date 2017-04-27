@@ -45,6 +45,9 @@
       // Release returned data
       mysqli_free_result($result);
 
+      // Set a session for username once the user credentials match
+      $_SESSION['username'] = username;
+
       // Access granted. Redirect to the users dashboard
       redirect_to('dashboard.php');
     }
