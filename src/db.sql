@@ -1,32 +1,47 @@
 CREATE TABLE USER
 (
-  username varchar(32) NOT NULL UNIQUE,
-  password varchar(32) NOT NULL,
-  fullname varchar(64) NOT NULL,
-  status tinyint NOT NULL,
-  PRIMARY KEY (username)
-);
-
-CREATE TABLE MAILBOX
-(
-  MsgID int NOT NULL UNIQUE AUTO_INCREMENT,
-  MsgText varchar(250) NOT NULL,
+  Username varchar(32) NOT NULL UNIQUE,
+  Password varchar(32) NOT NULL,
+  Fullname varchar(64) NOT NULL,
   Status tinyint NOT NULL,
-  Subject varchar(20),
-  MsgDate DateTime NOT NULL,
-  Sender varchar(20) NOT NULL,
-  Receiver varchar(20) NOT NULL,
-  FOREIGN KEY (Receiver) REFERENCES USER(username),
-  FOREIGN KEY (Sender) REFERENCES USER(username)
+  PRIMARY KEY (Username)
 );
 
 CREATE TABLE CHATROOM
 (
-  RoomNo int NOT NULL UNIQUE AUTO_INCREMENT,
-  StartUser varchar(20) NOT NULL,
-  Content varchar(250),
+  RoomNo int(11) NOT NULL AUTO_INCREMENT,
+  RoomName varchar(64) NOT NULL,
+  StartUser varchar(32) NOT NULL,
+  DateCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
   FOREIGN KEY (StartUser) REFERENCES USER(Username),
   PRIMARY KEY (RoomNo)
+);
+
+CREATE TABLE CHATROOMLOG
+(
+  ChatID int(11) NOT NULL AUTO_INCREMENT,
+  ChatEntry text NOT NULL,
+  UserSentBy varchar(32) NOT NULL,
+  RoomNo int(11) NOT NULL,
+  TimeChatSent TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  PRIMARY KEY(ChatID),
+  FOREIGN KEY(RoomNo) REFERENCES CHATROOM(RoomNo),
+  FOREIGN KEY(UserSentBy) REFERENCES USER(Username)
+);
+
+CREATE TABLE MAILBOX
+(
+  MsgID int(11) NOT NULL UNIQUE AUTO_INCREMENT,
+  MsgText text NOT NULL,
+  Status tinyint NOT NULL,
+  Subject varchar(64),
+  MsgDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  Sender varchar(32) NOT NULL,
+  Receiver varchar(32) NOT NULL,
+  FOREIGN KEY (Receiver) REFERENCES USER(Username),
+  FOREIGN KEY (Sender) REFERENCES USER(Username)
 );
 
 CREATE TABLE FORUM

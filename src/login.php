@@ -36,17 +36,14 @@
     $hash = md5($password);
 
     // Check credential matches
-    if($user_credentials['username'] === $username &&
-      $user_credentials['password'] === $hash)
+    if($user_credentials['Username'] === $username &&
+      $user_credentials['Password'] === $hash)
     {
       // Store username in session
-      $_SESSION['username'] = $user_credentials['username'];
+      $_SESSION['username'] = $user_credentials['Username'];
 
       // Release returned data
       mysqli_free_result($result);
-
-      // Set a session for username once the user credentials match
-      $_SESSION['username'] = username;
 
       // Access granted. Redirect to the users dashboard
       redirect_to('dashboard.php');
@@ -69,6 +66,7 @@
   <?php include "navbar.php" ?>
     <div class="container">
       <div class="row">
+        <br>
         <div class="col-lg-5 col-lg-offset-3">
           <?php
             if(isset($_SESSION['success_message']))

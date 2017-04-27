@@ -1,16 +1,15 @@
 <?php
 
+  // Create new user
   function register_user_query($username, $password, $fullname, $status)
   {
     // Encrypt password using MD5 algorithm
     $hash = md5($password);
-
     $query  = "INSERT INTO USER (";
-    $query .= "  username, password, fullname, status";
+    $query .= "Username, Password, Fullname, Status";
     $query .= ") VALUES (";
     $query .= "'{$username}', '{$hash}', '{$fullname}', $status";
     $query .= ");";
-
     return $query;
   }
 
@@ -22,9 +21,18 @@
 
     $query  = "SELECT * ";
     $query .= "FROM USER ";
-    $query .= "WHERE username = '{$username}' AND password = '{$hash}';";
+    $query .= "WHERE Username = '{$username}' AND Password = '{$hash}';";
     return $query;
   }
 
-
+  // Create new chatroom
+  function create_chatroom_query($username, $chatroom_subject)
+  {
+    $query  = "INSERT INTO USER (";
+    $query .= "RoomName, StartUser";
+    $query .= ") VALUES (";
+    $query .= "'{$chatroom_subject}', '{$username}'";
+    $query .= ");";
+    return $query;
+  }
 ?>
