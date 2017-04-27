@@ -14,7 +14,7 @@
   }
 
   // Redirect the user if they try to access a page without authenticating first
-  function user_authenticated()
+  function confirm_user_authentication()
   {
     if(!logged_in())
     {

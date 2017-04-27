@@ -1,10 +1,13 @@
 <?php require_once('./include/sessions.php'); ?>
 <?php require_once('./database/open-connection.php'); ?>
 <?php require_once('./database/queries.php'); ?>
+<?php require_once('./include/functions.php'); ?>
+
 <?php
-  // Temporary to hide
-  $_SESSION['username'] = 'true';
+  // Check whether the user is logged in.
+  confirm_user_authentication();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
