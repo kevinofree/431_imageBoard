@@ -5,6 +5,12 @@
 <?php
   // Check whether the user is logged in.
   confirm_user_authentication();
+
+  // Create database query
+  $query = get_chatrooms_query();
+
+  // Perform the query on the database
+  $result = mysqli_query($connection, $query);
 ?>
 
 <!DOCTYPE html>
@@ -43,8 +49,66 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h1>Welcome to your dashboard.</h1>
+              <h1>Chatrooms Available</h1>
+              <br>
+              <div class="row">
+                <div class="col-md-9">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>
+                          Chatroom Name
+                        </th>
+                        <th>
+                          Created By User
+                        </th>
+                        <th>
+                          Date Created
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php
+
+                      while($chatroom = mysqli_fetch_assoc($result))
+                      {
+                        echo '<tr>';
+
+                        // subject
+                        echo '<td>';
+                        echo '<span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;';
+                        echo '<span class="chat-room-name">';
+                        echo $chatroom['RoomName'];
+                        echo '</span>';
+                        echo '</td>';
+
+                        // username
+                        echo '<td>';
+                        echo '<span class="start-user">';
+                        echo $chatroom['StartUser'];
+                        echo '</span>';
+                        echo '</td>';
+
+                        // date
+                        echo '<td>';
+                        echo '<span class="chatroom-date">';
+                        echo $chatroom['DateCreated'];
+                        echo '</span>';
+                        echo '</td>';
+
+                        echo '</tr>';
+                      }
+
+                      mysqli_free_result($result);
+                    ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+                <!--
                 <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                -->
             </div>
           </div>
         </div>

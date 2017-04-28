@@ -15,14 +15,28 @@
     $username = $_SESSION['username'];
 
     $query = create_chatroom_query($username, $chatroom_subject);
-    echo "<br><br><br>";
-    echo $query;
 
+    // Perform the query on the database
+    $result = mysqli_query($connection, $query);
 
+    // Check if the query contained any errors
+    if($result)
+    {
+      // Chatroom created success message
+      $_SESSION['success_message'] = 'Chatroom has been created!';
 
+      // Redirect the client to the dashboard
+      redirect_to('dashboard.php');
+    }
+    else
+    {
+      // Chatroom failed to be created
+      $_SESSION['fail_message'] = "Something went wrong.";
+
+      // Redirect the client to the dashboard
+      redirect_to('dashboard.php');
+    }
   }
-
-
 ?>
 
 <!DOCTYPE html>
