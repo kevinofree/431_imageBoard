@@ -28,11 +28,18 @@
   // Create new chatroom
   function create_chatroom_query($username, $chatroom_subject)
   {
-    $query  = "INSERT INTO USER (";
+    $query  = "INSERT INTO CHATROOM (";
     $query .= "RoomName, StartUser";
     $query .= ") VALUES (";
     $query .= "'{$chatroom_subject}', '{$username}'";
     $query .= ");";
+    return $query;
+  }
+
+  function get_chatrooms_query()
+  {
+    $query  = "SELECT * ";
+    $query .= "FROM CHATROOM;";
     return $query;
   }
 ?>
