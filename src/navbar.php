@@ -33,17 +33,14 @@
     $hash = md5($password);
 
     // Check credential matches
-    if($user_credentials['username'] === $username &&
-      $user_credentials['password'] === $hash)
+    if($user_credentials['Username'] === $username &&
+      $user_credentials['Password'] === $hash)
     {
       // Store username in session
-      $_SESSION['username'] = $user_credentials['username'];
+      $_SESSION['username'] = $user_credentials['Username'];
 
       // Release returned data
       mysqli_free_result($result);
-
-      // Set a session for username once the user credentials match
-      $_SESSION['username'] = username;
 
       // Access granted. Redirect to the users dashboard
       redirect_to('dashboard.php');
@@ -53,6 +50,8 @@
     {
       // If the user enters the wrong username or password, send a fail message to the client
       $_SESSION['fail_message'] = 'Invalid username or password, please try again.';
+
+      redirect_to('login.php');
     }
 
   }
