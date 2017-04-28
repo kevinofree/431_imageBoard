@@ -65,6 +65,9 @@
                         <th>
                           Date Created
                         </th>
+                        <th>
+                          Room Number
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -97,6 +100,13 @@
                         echo '<td>';
                         echo '<span class="chatroom-date">';
                         echo $chatroom['DateCreated'];
+                        echo '</span>';
+                        echo '</td>';
+
+                        // room number
+                        echo '<td>';
+                        echo '<span class="room-number">';
+                        echo $chatroom['RoomNo'];
                         echo '</span>';
                         echo '</td>';
 
