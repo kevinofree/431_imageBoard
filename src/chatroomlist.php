@@ -65,22 +65,28 @@
                         <th>
                           Date Created
                         </th>
+                        <th>
+                          Room Number
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
 
                     <?php
 
+                      // Loop and print the contents from the CHATROOM table from the db
                       while($chatroom = mysqli_fetch_assoc($result))
                       {
                         echo '<tr>';
 
                         // subject
                         echo '<td>';
+                        echo '<form method="GET" action="chatroom.php">';
                         echo '<span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;';
-                        echo '<span class="chat-room-name">';
+                        echo '<button type="submit" class="btn btn-link">';
                         echo $chatroom['RoomName'];
-                        echo '</span>';
+                        echo '</button>';
+                        echo '</form>';
                         echo '</td>';
 
                         // username
@@ -97,9 +103,17 @@
                         echo '</span>';
                         echo '</td>';
 
+                        // room number
+                        echo '<td>';
+                        echo '<span class="room-number">';
+                        echo $chatroom['RoomNo'];
+                        echo '</span>';
+                        echo '</td>';
+
                         echo '</tr>';
                       }
 
+                      // Release the data from the database
                       mysqli_free_result($result);
                     ?>
                     </tbody>
