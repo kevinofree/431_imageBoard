@@ -100,3 +100,4 @@
     <script src="js/sidebar.js"></script>
   </body>
 </html>
+<?php require_once('./database/close-connection.php'); ?>
