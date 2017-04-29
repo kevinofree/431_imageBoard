@@ -10,7 +10,7 @@
   //Do not display the navbar login form on this page
   $_SESSION['register_page'] = 'active';
 
-  // If login in form has been submitted
+  // If login form has been submitted
   if(isset($_POST['login-submit']))
   {
     // Get the users credentials

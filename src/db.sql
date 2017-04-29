@@ -22,7 +22,7 @@ CREATE TABLE CHATROOMLOG
 (
   ChatID int(11) NOT NULL AUTO_INCREMENT,
   ChatEntry text NOT NULL,
-  UserSentBy varchar(32) NOT NULL,
+  SentBy varchar(32) NOT NULL,
   RoomNo int(11) NOT NULL,
   TimeChatSent TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 

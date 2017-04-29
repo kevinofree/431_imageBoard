@@ -17,7 +17,7 @@
     // New default user
     $status = 0;
 
-    // Create database query for a newly egistered user
+    // Create database query for a newly registered user
     $query = register_user_query($username, $password, $fullname, $status);
 
     // Perform the query on the database
