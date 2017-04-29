@@ -5,6 +5,13 @@
 <?php
   // Check whether the user is logged in.
   confirm_user_authentication();
+
+  $room_number = $_GET['room-id'];
+  $room_name = $_GET['room-name'];
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +46,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h1 class="page-header">Chat Room: "subject"</h1><br>
+              <h1 class="page-header">Chat Room: <?= $room_name; ?></h1><br>
                 <!--
                 <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                 -->
@@ -92,7 +99,10 @@
                     <div class="input-group">
 
                       <input id="chat-input" type="text" class="form-control" placeholder="Type your message here..." />
-
+                      <?php
+                        echo '<input type="hidden" id="room-id" value="' . $_GET['room-id'] . '">';
+                        echo '<input type="hidden" id="room-name" value="' . $_GET['room-name'] . '">';
+                      ?>
                       <span class="input-group-btn">
                         <button class="btn btn-success" id="sendChat">Send</button>
                       </span>

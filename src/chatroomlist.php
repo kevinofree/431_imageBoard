@@ -82,6 +82,8 @@
                         // subject
                         echo '<td>';
                         echo '<form method="GET" action="chatroom.php">';
+                        echo '<input type="hidden" name="room-id" value="' . $chatroom['RoomNo'] . '">';
+                        echo '<input type="hidden" name="room-name" value="' . $chatroom['RoomName'] . '">';
                         echo '<span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;';
                         echo '<button type="submit" class="btn btn-link">';
                         echo $chatroom['RoomName'];

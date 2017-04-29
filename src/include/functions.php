@@ -7,7 +7,7 @@
     exit;
   }
 
-  // Check is username is set
+  // Check if username is set
   function logged_in()
   {
     return isset($_SESSION['username']);
