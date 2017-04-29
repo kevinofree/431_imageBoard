@@ -3,8 +3,17 @@ CREATE TABLE USER
   Username varchar(32) NOT NULL UNIQUE,
   Password varchar(32) NOT NULL,
   Fullname varchar(64) NOT NULL,
-  Status tinyint NOT NULL,
+  Status tinyint(1) NOT NULL,
   PRIMARY KEY (Username)
+);
+
+CREATE TABLE CHATUSER
+(
+  RoomNo int(11) NOT NULL,
+  User varchar(20) NOT NULL,
+
+  FOREIGN KEY (RoomNo) REFERENCES CHATROOM(RoomNo),
+  FOREIGN KEY (User) REFERENCES USER(Username)
 );
 
 CREATE TABLE CHATROOM
@@ -14,8 +23,8 @@ CREATE TABLE CHATROOM
   StartUser varchar(32) NOT NULL,
   DateCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-  FOREIGN KEY (StartUser) REFERENCES USER(Username),
-  PRIMARY KEY (RoomNo)
+  PRIMARY KEY (RoomNo),
+  FOREIGN KEY (StartUser) REFERENCES USER(Username)
 );
 
 CREATE TABLE CHATROOMLOG
@@ -28,45 +37,49 @@ CREATE TABLE CHATROOMLOG
 
   PRIMARY KEY(ChatID),
   FOREIGN KEY(RoomNo) REFERENCES CHATROOM(RoomNo),
-  FOREIGN KEY(UserSentBy) REFERENCES USER(Username)
+  FOREIGN KEY(SentBy) REFERENCES USER(Username)
 );
 
 CREATE TABLE MAILBOX
 (
   MsgID int(11) NOT NULL UNIQUE AUTO_INCREMENT,
   MsgText text NOT NULL,
-  Status tinyint NOT NULL,
+  Status tinyint(1) NOT NULL,
   Subject varchar(64),
   MsgDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   Sender varchar(32) NOT NULL,
   Receiver varchar(32) NOT NULL,
+
   FOREIGN KEY (Receiver) REFERENCES USER(Username),
-  FOREIGN KEY (Sender) REFERENCES USER(Username)
+  FOREIGN KEY (Sender) REFERENCES USER(Username),
+  PRIMARY KEY (MsgID)
 );
 
 CREATE TABLE FORUM
 (
-  ForumName varchar(30),
+  ForumName varchar(64),
   Picture longblob NOT NULL,
-  Status tinyint NOT NULL,
-  Description varchar(250),
-  Moderator varchar(20) NOT NULL,
-  PRIMARY KEY (ForumName),
-  FOREIGN KEY (Moderator) REFERENCES USER(Username)
+  Status tinyint(1) NOT NULL,
+  Description text NOT NULL,
+  Moderator varchar(32) NOT NULL,
+
+  FOREIGN KEY (Moderator) REFERENCES USER(Username),
+  PRIMARY KEY (ForumName)
 );
 
 CREATE TABLE THREAD
 (
-  ThreadNo int NOT NULL AUTO_INCREMENT,
-  FName varchar(30) NOT NULL,
+  ThreadNo int(11) NOT NULL AUTO_INCREMENT,
+  ForumName varchar(64) NOT NULL,
   TDate DateTime NOT NULL,
   Status tinyint NOT NULL,
   Title varchar(20),
-  Content varchar(250) NOT NULL,
-  StartUser varchar(20) NOT NULL,
-  PRIMARY KEY (ThreadNo),
+  Content text NOT NULL,
+  StartUser varchar(32) NOT NULL,
+
   FOREIGN KEY (StartUser) REFERENCES USER(Username),
-  FOREIGN KEY (FName) REFERENCES FORUM(ForumName)
+  FOREIGN KEY (FName) REFERENCES FORUM(ForumName),
+  PRIMARY KEY (ThreadNo)
 );
 
 CREATE TABLE POST
@@ -77,21 +90,13 @@ CREATE TABLE POST
   PRIMARY KEY (PostNo)
 );
 
-CREATE TABLE CHATUSER
-(
-  Rno int NOT NULL,
-  User varchar(20) NOT NULL,
-  FOREIGN KEY (Rno) REFERENCES CHATROOM(RoomNo),
-  FOREIGN KEY (User) REFERENCES USER(Username)
-);
-
 CREATE TABLE RANK
 (
-  UserN varchar(20) NOT NULL,
+  Username varchar(32) NOT NULL,
   FN varchar(30) NOT NULL,
   ThNo int NOT NULL,
   Ranking int NOT NULL,
-  FOREIGN KEY (UserN) REFERENCES USER(Username),
+  FOREIGN KEY (Username) REFERENCES USER(Username),
   FOREIGN KEY (FN) REFERENCES FORUM(ForumName),
   FOREIGN KEY (ThNo) REFERENCES THREAD(ThreadNo)
 );

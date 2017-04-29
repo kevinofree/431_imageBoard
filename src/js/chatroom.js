@@ -22,7 +22,7 @@ var $main = function() {
     // Open a POST request with the URL request-chatlog.php. Set to TRUE for an asynchronous request
     xhr.open('POST', 'request-chatlog.php', true);
 
-    // Set the content headers for the request
+    // Set the content headers for the AJAX request
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
@@ -33,7 +33,7 @@ var $main = function() {
       // Output readystate
       console.log('readyState : ' + xhr.readyState);
 
-      // Check for ready date 2, request sent, received by server
+      // Check for ready state 2, request sent, received by server
       if(xhr.readyState == 2) {
         console.log("Loading....");
       }
@@ -45,6 +45,10 @@ var $main = function() {
         /*
           Use jQuery to display new chats here ..
         */
+
+        //Parse the JSON Object
+        var chatLog = JSON.parse(xhr.responseText);
+        console.log(chatLog);
 
       }
     }

@@ -36,7 +36,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h1 class="page-header">Chat Room: <?= $room_name; ?></h1><br>
+              <h1 class="page-header">Chat Room: <?= $_GET['room-name']; ?></h1><br>
                 <!--
                 <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                 -->
@@ -67,6 +67,13 @@
                           <td>
                             <span class="glyphicon glyphicon-ok-sign"></span>&nbsp;
                             <span class="connected-user">SAMPLE USER12</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <form method="GET" action="dashboard.php">
+                              <input class="btn btn-warning btn-block" type="submit" value="Leave Chatroom">
+                            </form>
                           </td>
                         </tr>
                       </tbody>

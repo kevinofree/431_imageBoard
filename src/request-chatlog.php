@@ -31,32 +31,40 @@
     /*
       NOTE: The school's server only supports PHP 5.1
             json_encode() is only available for PHP 5.2 and above
-
-
-      Working Progress, still needs more work April 29, 2017
     */
 
-    $json_start = '{';
+    $json = '{ "chatlog" : [';
+
+    // Get the number of row entrys in the database result query
+    $num_of_rows = mysqli_num_rows($result);
 
     while($chatlog = mysqli_fetch_assoc($result))
     {
-      $json_inner_start = '{';
+      $json .= '{';
 
-      $chat_id = '"chatID : "' . $chatlog['ChatID'] . ', ';
-      $chat_text = '"chatText : "' . $chatlog['ChatEntry'] . ', ';
-      $chat_sent_by = '"chatSentBy : "' . $chatlog['SentBy'] . ', ';
-      $chat_time_sent = '"chatTimeSent" :' . $chatlog['TimeChatSent'];
+      $json .= '"chatID" : ' . $chatlog['ChatID'] . ', ';
+      $json .= '"roomID" : ' . $chatlog['RoomNo'] . ', ';
+      $json .= '"chatText" : ' . '"' . $chatlog['ChatEntry'] . '"' . ', ';
+      $json .= '"chatSentBy" : ' . '"' . $chatlog['SentBy'] . '"' . ', ';
+      $json .= '"chatTimeSent" : ' . '"' . $chatlog['TimeChatSent'] . '"';
 
-      $json_inner_end = '}';
+      $json .= '}';
 
+      if($num_of_rows > 1)
+      {
+        $json .= ', ';
+      }
+
+      --$num_of_rows;
     }
 
-    $json_end = '}';
-
+    $json .= '] }';
 
     // Release the data from the database
     mysqli_free_result($result);
 
+    // Send the json object to the client
+    echo $json;
   }
   else
   {
