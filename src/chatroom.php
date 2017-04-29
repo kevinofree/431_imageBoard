@@ -97,7 +97,6 @@
                     </div>
                   <div class="panel-footer">
                     <div class="input-group">
-
                       <input id="chat-input" type="text" class="form-control" placeholder="Type your message here..." />
                       <?php
                         echo '<input type="hidden" id="room-id" value="' . $_GET['room-id'] . '">';

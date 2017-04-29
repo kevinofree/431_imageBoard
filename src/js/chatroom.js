@@ -1,10 +1,6 @@
 var $main = function() {
-  /*
-    Notes:
-    Use sessions in PHP to track which user has signed onto the chatroom
-  */
 
-  function processChatMessage(callback) {
+  function processChatMessage() {
 
     var chatMessage = $('#chat-input').val();
     var roomID = $('#room-id').val();
@@ -14,43 +10,59 @@ var $main = function() {
     console.log(roomName);
     console.log(chatMessage);
 
-    var sendData = {
-      "room-id" : roomID,
-      "room-name" : roomName,
-      "chat-text" : chatMessage
-    };
-
+    var sendData = 'chat-text=' + chatMessage + '&' + 'room-id=' + roomID + '&' + 'room-name=' + roomName;
     console.log(sendData);
 
+    // Clear the chat input field
     $('#chat-input').val('');
 
-  }
+    // Create new xhr object
+    var xhr = new XMLHttpRequest();
 
-  // Request an HTTP GET Ajax call to the server to retrieve chatlogs
-  function getChatLog() {
-    $.ajax({
-      method : 'POST', // This link depends on the folder structure of the server
-      url : 'http://localhost:8080/apps/s28/GyroChan/431_imageBoard/src/request-chatlog.php',
-      contentType : 'application/json',
-      dataType: 'json',
-      success : function(data) {
-        console.log(data);
+    // Open a POST request with the URL request-chatlog.php. Set to TRUE for an asynchronous request
+    xhr.open('POST', 'request-chatlog.php', true);
+
+    // Set the content headers for the request
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    // Define on ready state change. This function gets called every time readyState changes.
+    // It is a XML HTTP Object function.
+    xhr.onreadystatechange = function() {
+
+      // Output readystate
+      console.log('readyState : ' + xhr.readyState);
+
+      // Check for ready date 2, request sent, received by server
+      if(xhr.readyState == 2) {
+        console.log("Loading....");
       }
-    });
+
+      // Check for ready state 4 and stutus code 200, reponse complete (sucess or failure)
+      if(xhr.readyState == 4 && xhr.status == 200) {
+        console.log('XHR response text: ' + xhr.responseText);
+
+        /*
+          Use jQuery to display new chats here ..
+        */
+
+      }
+    }
+
+    // Send the asynchronous request
+    xhr.send(sendData);
   }
 
-  // Gets called intially when the user first logs into the chatroom
-  //getChatLog();
 
   // Listens when the user clicks on the send button
   $('#sendChat').on('click', function() {
-    processChatMessage(getChatLog());
+    processChatMessage();
   });
 
   // Listens when the user presses enter on the keyboard
   $('#chat-input').on('keypress', function(event) {
     if(event.keyCode === 13) {
-      processChatMessage(getChatLog());
+      processChatMessage();
     }
   });
 };
