@@ -7,6 +7,13 @@
     exit;
   }
 
+   // Detect whether the request is an AJAX request
+  function is_ajax_request()
+  {
+    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+      $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
+  }
+
   // Check if username is set
   function logged_in()
   {

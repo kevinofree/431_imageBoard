@@ -2,17 +2,7 @@
 <?php require_once('./database/open-connection.php'); ?>
 <?php require_once('./database/queries.php'); ?>
 <?php require_once('./include/functions.php'); ?>
-<?php
-  // Check whether the user is logged in.
-  confirm_user_authentication();
-
-  $room_number = $_GET['room-id'];
-  $room_name = $_GET['room-name'];
-
-
-
-
-?>
+<?php confirm_user_authentication(); ?>
 
 <!DOCTYPE html>
 <html lang="en">
