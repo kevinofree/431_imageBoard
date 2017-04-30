@@ -102,3 +102,35 @@ CREATE TABLE RANK
   FOREIGN KEY (FN) REFERENCES FORUM(ForumName),
   FOREIGN KEY (ThNo) REFERENCES THREAD(ThreadNo)
 );
+
+CREATE TABLE MAILBOX
+(
+  MessageID int NOT NULL AUTO_INCREMENT.
+  Subject varchar(32) NOT NULL,
+  MsgTime DateTime NOT NULL,
+  MsgText text,
+  Sender varchar(32) NOT NULL,
+  Receiver varchar(32) NOT NULL,
+  status tinyint(1)
+
+  FOREIGN KEY (Sender) REFERENCES USER(Username),
+  FOREIGN KEY (Receiver) REFERENCES USER(Username),
+  PRIMARY KEY (MessageID)
+)
+
+CREATE TABLE BANNED
+(
+  FName varchar(64),
+  User varchar(32) NOT NULL,
+  FOREIGN KEY (User) REFERENCES USER(Username),
+  FOREIGN KEY (FName) REFERENCES FORUM(ForumName)
+
+)
+
+CREATE TABLE REQUETS
+(
+  FName varchar(64) NOT NULL,
+  Description text NOT NULL,
+  RequestedBy varchar(32) NOT NULL,
+  FOREIGN KEY (RequestedBy) REFERENCES FORUM(ForumName)
+)
