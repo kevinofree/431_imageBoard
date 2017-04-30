@@ -6,6 +6,8 @@
 
   // If user is on the register page do not display the login area in the navbar
   $_SESSION['register_page'] = 'active';
+  if(isset($_SESSION['username']))
+    redirect_to('index.php');
 
   if(isset($_POST['register-submit']))
   {

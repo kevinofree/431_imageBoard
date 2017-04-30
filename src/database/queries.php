@@ -43,6 +43,11 @@
     return $query;
   }
 
+  //select users
+  function get_user($username)
+  {
+  }
+
   //****************************************************
   //************* Chatroom Feature Queries *************
   //****************************************************
@@ -104,8 +109,8 @@
   // Retrieve all messages sent to user
   function get_message_inbox()
   {
-    $query  = "SELECT MsgID, MsgText, Subject, MsgDate, Sender FROM MAILBOX ";
-    $query .= "WHERE Receiver = '{$_SESSION['username']}' ;";
+    $query  = "SELECT MsgID, MsgText, Subject, MsgDate, Sender, Status FROM MAILBOX ";
+    $query .= "WHERE Receiver = '{$_SESSION['username']}' ORDER BY MsgDate DESC ;";
 
     return $query;
   }
@@ -115,6 +120,23 @@
   {
     $query  = "SELECT MsgID, MsgText, Subject, MsgDate, Receiver FROM MAILBOX ";
     $query .= "WHERE Sender = '{$_SESSION['username']}' ;";
+
+    return $query;
+  }
+
+  function get_single_message($messageID)
+  {
+    $query = "SELECT * FROM MAILBOX ";
+    $query .= "WHERE MsgID = $messageID;";
+
+    return $query;
+  }
+
+  function update_message_status($messageID, $status)
+  {
+    $query = "UPDATE MAILBOX ";
+    $query .= "SET Status = $status ";
+    $query .= "WHERE MsgID = $messageID;";
 
     return $query;
   }

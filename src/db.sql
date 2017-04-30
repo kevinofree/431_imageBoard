@@ -87,7 +87,7 @@ CREATE TABLE POST
   PostNo int not NULL AUTO_INCREMENT,
   PostText varchar(250),
   PostDate DateTime NOT NULL,
-  ThreadNo int(11) NOT NULL AUTO_INCREMENT,
+  ThreadNo int(11) NOT NULL,
   FOREIGN KEY (ThreadNo) REFERENCES THREAD(ThreadNo),
   PRIMARY KEY (PostNo)
 );
@@ -108,7 +108,7 @@ CREATE TABLE MAILBOX
   MessageID int NOT NULL AUTO_INCREMENT.
   Subject varchar(32) NOT NULL,
   MsgTime DateTime NOT NULL,
-  MsgText text,
+  MsgText TEXT,
   Sender varchar(32) NOT NULL,
   Receiver varchar(32) NOT NULL,
   status tinyint(1)
@@ -116,7 +116,7 @@ CREATE TABLE MAILBOX
   FOREIGN KEY (Sender) REFERENCES USER(Username),
   FOREIGN KEY (Receiver) REFERENCES USER(Username),
   PRIMARY KEY (MessageID)
-)
+);
 
 CREATE TABLE BANNED
 (
@@ -124,13 +124,12 @@ CREATE TABLE BANNED
   User varchar(32) NOT NULL,
   FOREIGN KEY (User) REFERENCES USER(Username),
   FOREIGN KEY (FName) REFERENCES FORUM(ForumName)
+);
 
-)
-
-CREATE TABLE REQUETS
+CREATE TABLE REQUESTS
 (
   FName varchar(64) NOT NULL,
   Description text NOT NULL,
   RequestedBy varchar(32) NOT NULL,
   FOREIGN KEY (RequestedBy) REFERENCES FORUM(ForumName)
-)
+);

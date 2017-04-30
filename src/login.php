@@ -46,7 +46,7 @@
       mysqli_free_result($result);
 
       // Access granted. Redirect to the users dashboard
-      redirect_to('dashboard.php');
+      redirect_to('index.php');
     }
     else
     {

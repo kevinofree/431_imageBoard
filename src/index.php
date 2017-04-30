@@ -20,10 +20,14 @@
     <div class="container-fluid">
       <div class="jumbotron">
         <h1 style="font-family: 'Press Start 2P', cursive;">Welcome to GyroChan!</h1>
-        <p class="lead">
-          If you don't have an account, please
-          <a href="register.php"><span id="register-link">register</span></a>
-        </p>
+        <?php
+          if(!isset($_SESSION['username']))
+          {
+            echo "<p class='lead'>
+                  If you don't have an account, please <a href='register.php'><span id='register-link'>register</span></a>
+                 </p>";
+          }
+        ?>
       </div>
       <hr>
     </div>

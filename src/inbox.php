@@ -50,11 +50,11 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h1>Mailbox: Inbox</h1>
+              <h1>Inbox</h1>
               <br>
 <div class="row">
   <div class="col-md-9">
-    <table class="table table-striped">
+    <table class="table">
       <thead>
         <tr>
           <th>
@@ -62,9 +62,6 @@
           </th>
           <th>
             Subject
-          </th>
-          <th>
-            Content
           </th>
           <th>
             Date
@@ -77,7 +74,16 @@
           // Loop and print the contents from the CHATROOM table from the db
           while($inbox = mysqli_fetch_assoc($result))
           {
-            echo '<tr>';
+            if($inbox['Status'] == 0)
+            {
+              $class = 'class="bg-warning"';
+            }
+            else
+            {
+              $class = '';
+            }
+
+            echo "<tr $class>";
 
             // Sender
             echo '<td>';
@@ -92,14 +98,7 @@
             // Subject
             echo '<td>';
             echo '<span class="msg-subject">';
-            echo $inbox['Subject'];
-            echo '</span>';
-            echo '</td>';
-
-            // Content
-            echo '<td>';
-            echo '<span class="msg-content">';
-            echo $inbox['MsgText'];
+            echo "<a href='viewmssg.php?id={$inbox['MsgID']}'>{$inbox['Subject']}</a>";
             echo '</span>';
             echo '</td>';
 

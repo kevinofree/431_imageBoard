@@ -5,10 +5,24 @@
 <?php
   // Check whether the user is logged in.
   confirm_user_authentication();
+
+  // Create database query
+  $messageID = $_GET['id'];
+  $query = get_single_message($messageID);
   $user = $_SESSION['username'];
-  if(isset($_GET['user']))
+
+  // Perform the query on the database
+  $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+  $row = mysqli_fetch_assoc($result);
+  if($row['Receiver'] != $user || $row['Sender'] != $user)
   {
-    $user = $_GET['user'];
+    redirect_to('inbox.php');
+  }
+
+  if($row['Status'] == 0)
+  {
+    $query = update_message_status($messageID, 1);
+    $changed = mysqli_query($connection, $query) or die(mysqli_error($connection));
   }
 
 ?>
@@ -46,20 +60,17 @@
 
         <!-- Page Content -->
       <div id="page-content-wrapper">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-12">
-              <h1><?php echo $user; ?>'s Profile</h1>
-            </div>
-            <div class="col-lg-11">
-              <h2 >Send <?php echo $user ?> A Message</h2>
-              <a href="composemail.php?user=<?php echo $user;?>"><img src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/mailbox-128.png" alt="mailbox"></a>
-            </div>
-          </div>
+        <div class="form-group">
+          <h4>Sender: <?php echo $row['Sender']?></h4>
+        </div>
+        <div class="form-group">
+          <h4>Subject: <?php echo $row['Subject']?></h4>
+        </div>
+        <div class="form-group">
+          <textarea readonly class="form-control" rows=15><?php echo $row['MsgText'];?></textarea>
         </div>
       </div>
         <!-- /#page-content-wrapper -->
-
     </div>
     <!-- /#wrapper -->
     <?php include "scripts.php"; ?>
@@ -68,3 +79,4 @@
     <script src="js/sidebar.js"></script>
   </body>
 </html>
+<?php require_once('./database/close-connection.php'); ?>
