@@ -89,6 +89,35 @@
   //************* Mailbox System Queries ***************
   //****************************************************
 
+  // Create new message
+  function create_mail_query($subject, $content, $sender, $receiver, $status)
+  {
+    $query  = "INSERT INTO MAILBOX (";
+    $query .= "MsgText, Status, Subject, Sender, Receiver";
+    $query .= ") VALUES (";
+    $query .= "'{$content}', '{$status}', '{$subject}', '{$sender}', '{$receiver}'";
+    $query .= ");";
+
+    return $query;
+  }
+
+  // Retrieve all messages sent to user
+  function get_message_inbox()
+  {
+    $query  = "SELECT MsgID, MsgText, Subject, MsgDate, Sender FROM MAILBOX ";
+    $query .= "WHERE Receiver = '{$_SESSION['username']}' ;";
+
+    return $query;
+  }
+
+  // Retrieve all messages sent by user
+  function get_message_sent()
+  {
+    $query  = "SELECT MsgID, MsgText, Subject, MsgDate, Receiver FROM MAILBOX ";
+    $query .= "WHERE Sender = '{$_SESSION['username']}' ;";
+
+    return $query;
+  }
 
   //****************************************************
   //*********** Threads and Posts Queries **************
