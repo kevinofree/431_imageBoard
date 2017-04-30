@@ -1,12 +1,20 @@
 var $main = function() {
+  // Retrieve the entire chat history for the room
+  get_chatlog_ajax_request();
 
   function get_chatlog_ajax_request() {
+
+    // Get the room number
+    var roomID = $('#room-id').val();
+
+    // Create the POST request data object
+    var sendData = 'room-id=' + roomID;
 
     // Create new xhr object
     var xhr = new XMLHttpRequest();
 
     // Open a POST request with the URL request-chatlog.php. Set to TRUE for an asynchronous request
-    xhr.open('POST', 'request-chatlog.php', true);
+    xhr.open('POST', 'ajax-getchatlog.php', true);
 
     // Set the content headers for the AJAX request
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -26,6 +34,8 @@ var $main = function() {
 
       // Check for ready state 4 and stutus code 200, reponse complete (sucess or failure)
       if(xhr.readyState == 4 && xhr.status == 200) {
+
+        //console.log(xhr.responseText);
 
         //Parse the JSON Object
         var display = JSON.parse(xhr.responseText);
@@ -64,33 +74,8 @@ var $main = function() {
     }
 
     // Send the asynchronous request
-    xhr.send();
+    xhr.send(sendData);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   /*
       This request gets the chat information and sends to the PHP server script.
@@ -114,7 +99,7 @@ var $main = function() {
     var xhr = new XMLHttpRequest();
 
     // Open a POST request with the URL request-chatlog.php. Set to TRUE for an asynchronous request
-    xhr.open('POST', 'request-chatlog.php', true);
+    xhr.open('POST', 'ajax-savechat.php', true);
 
     // Set the content headers for the AJAX request
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
