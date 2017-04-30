@@ -49,7 +49,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h1>Mailbox: Sent Mail</h1>
+              <h1>Sent Mail</h1>
               <br>
 <div class="row">
   <div class="col-md-9">
