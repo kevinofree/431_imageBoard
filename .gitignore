@@ -1,2 +1,4 @@
 # Ignore OS X custom attributes file
 .DS_Store
+src/database/environment.php
+php.*
