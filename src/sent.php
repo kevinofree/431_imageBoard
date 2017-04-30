@@ -80,12 +80,9 @@
 
             // Receiver
             echo '<td>';
-            echo '<form method="GET" action="">';
-            echo '<input type="hidden" name="msg-id" value="' . $sent['MsgID'] . '">';
-            echo '<button type="submit" class="btn btn-link">';
-            echo $sent['Receiver'];
-            echo '</button>';
-            echo '</form>';
+            echo '<span class="msg-receiver">';
+            echo "<a href='viewmssg.php?id={$sent['MsgID']}'>{$sent['Receiver']}</a>";
+            echo '</span>';
             echo '</td>';
 
             // Subject

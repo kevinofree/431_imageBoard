@@ -3,6 +3,10 @@
 <?php require_once('./database/queries.php'); ?>
 <?php require_once('./include/functions.php'); ?>
 <?php
+  $navbar_query = get_forum_names();
+  $navbar_results= mysqli_query($connection, $query);
+?>
+<?php
 
   // Used for session store and html entities in the form
   $username = "";
@@ -76,12 +80,16 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boards <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Anime</a></li>
-            <li><a href="#">Food and Cooking</a></li>
-            <li><a href="#">Video Games</a></li>
-            <li><a href="#">Cars</a></li>
-            <li><a href="#">Paranormal</a></li>
-            <li><a href="#">Randomness</a></li>
+            <?php
+            // Display the list of baords/forums in the navbar
+              while($boards=mysqli_fetch_assoc($navbar_results))
+              {
+                echo "<li><a href='#'>{$boards[ForumName]}";
+                echo "</a></li>";
+              }
+              // Release the data from the database
+              mysqli_free_result($navbar_results);
+            ?>
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Nav header</li>
             <li><a href="#">Separated link</a></li>

@@ -53,6 +53,8 @@
           echo "</tr>";
           //echo '<img style="max-height:220px" src="data:image/png;base64,' . base64_encode($forum['Picture']) .'">';
         }
+        // Release the data from the database
+        mysqli_free_result($result);
       ?>
       </tbody>
       </table>

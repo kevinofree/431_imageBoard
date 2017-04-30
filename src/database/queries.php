@@ -83,13 +83,21 @@
     return $query;
   }
 
-  function get_forums(){
+  function get_forums()
+  {
     $query = "SELECT *";
     $query .= "FROM FORUM";
 
     return $query;
   }
 
+  function get_forum_names()
+  {
+    $query = "SELECT ForumName";
+    $query .= "FROM FORUM";
+
+    return $query;
+  }
   //****************************************************
   //************* Mailbox System Queries ***************
   //****************************************************
@@ -148,7 +156,6 @@
     $query = "SELECT * FROM THREAD WHERE FName = '{$forumName}';";
     return $query;
   }
-
 
   //****************************************************
   //**************** Moderator Queries *****************

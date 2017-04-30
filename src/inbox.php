@@ -87,12 +87,9 @@
 
             // Sender
             echo '<td>';
-            echo '<form method="GET" action="">';
-            echo '<input type="hidden" name="msg-id" value="' . $inbox['MsgID'] . '">';
-            echo '<button type="submit" class="btn btn-link">';
-            echo $inbox['Sender'];
-            echo '</button>';
-            echo '</form>';
+            echo '<span class="msg-sender">';
+            echo "<a href='viewmssg.php?id={$inbox['MsgID']}'>{$inbox['Sender']}</a>";
+            echo '</span>';
             echo '</td>';
 
             // Subject
