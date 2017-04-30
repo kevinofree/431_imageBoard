@@ -78,6 +78,13 @@
     return $query;
   }
 
+  function get_forums(){
+    $query = "SELECT *";
+    $query .= "FROM FORUM";
+
+    return $query;
+  }
+
   //****************************************************
   //************* Mailbox System Queries ***************
   //****************************************************
@@ -86,6 +93,10 @@
   //****************************************************
   //*********** Threads and Posts Queries **************
   //****************************************************
+  function get_related_threads($forumName){
+    $query = "SELECT * FROM THREAD WHERE FName = '{$forumName}';";
+    return $query;
+  }
 
 
   //****************************************************

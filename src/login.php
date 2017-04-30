@@ -80,7 +80,7 @@
           ?>
           <h2 class="text-center">Login</h2>
           <hr>
-          <form method="POST"">
+          <form method="POST">
             <div class="form-group">
               <label for="username">Username</label>
               <input type="text" class="form-control" name="username" maxlength="32" value="<?php echo htmlentities($username);?>" required>
