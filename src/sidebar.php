@@ -6,13 +6,7 @@
       <a>Menu</a>
     </li>
     <li>
-      <a href="dashboard.php">Dashboard</a>
-    </li>
-    <li>
       <a href="profile.php">Your Profile</a>
-    </li>
-    <li>
-      <a href="threadform.php">Start a Thread</a>
     </li>
     <li>
       <a href="chatroomform.php">Start a Chatroom</a>

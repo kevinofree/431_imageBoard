@@ -70,7 +70,7 @@ CREATE TABLE FORUM
 CREATE TABLE THREAD
 (
   ThreadNo int(11) NOT NULL AUTO_INCREMENT,
-  ForumName varchar(64) NOT NULL,
+  FName varchar(64) NOT NULL,
   TDate DateTime NOT NULL,
   Status tinyint NOT NULL,
   Title varchar(20),
@@ -87,6 +87,8 @@ CREATE TABLE POST
   PostNo int not NULL AUTO_INCREMENT,
   PostText varchar(250),
   PostDate DateTime NOT NULL,
+  ThreadNo int(11) NOT NULL AUTO_INCREMENT,
+  FOREIGN KEY (ThreadNo) REFERENCES THREAD(ThreadNo),
   PRIMARY KEY (PostNo)
 );
 
