@@ -119,7 +119,7 @@
   function get_message_sent()
   {
     $query  = "SELECT MsgID, MsgText, Subject, MsgDate, Receiver FROM MAILBOX ";
-    $query .= "WHERE Sender = '{$_SESSION['username']}' ;";
+    $query .= "WHERE Sender = '{$_SESSION['username']}' ORDER BY MsgDate DESC ;";
 
     return $query;
   }

@@ -105,14 +105,13 @@ CREATE TABLE RANK
 
 CREATE TABLE MAILBOX
 (
-  MessageID int NOT NULL AUTO_INCREMENT.
+  MessageID int NOT NULL AUTO_INCREMENT,
   Subject varchar(32) NOT NULL,
   MsgTime DateTime NOT NULL,
   MsgText TEXT,
   Sender varchar(32) NOT NULL,
   Receiver varchar(32) NOT NULL,
-  status tinyint(1)
-
+  status tinyint(1),
   FOREIGN KEY (Sender) REFERENCES USER(Username),
   FOREIGN KEY (Receiver) REFERENCES USER(Username),
   PRIMARY KEY (MessageID)
