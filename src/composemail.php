@@ -13,12 +13,15 @@
 
   if (isset($_POST['mail-submit'])) {
       // Get form data
-    $receiver = $_POST['receiver'];
+      $receiver = $_POST['receiver'];
       $sender = $_SESSION['username'];
       $subject = $_POST['subject'];
       $content = $_POST['content'];
 
-    // Default message status
+    // Message Statuses:
+    // New = 0
+    // Read = 1
+    // Delete = 2
     $status = 0;
 
     // Create database query for the newly created message
@@ -67,10 +70,11 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h1>Create a Message</h1>
                  <div class="container">
                   <div class="row">
                       <div class="col-lg-5 col-lg-offset-3">
+                        <h1 class="text-center">Create a Message</h1>
+                        <br>
                         <?php
                           if (isset($_SESSION['success_message'])) {
                               echo '<div class="alert alert-success text-center">' . $_SESSION['success_message'] . '</div>';
@@ -88,9 +92,9 @@
                           </div>
                           <hr>
                           <div class="form-group">
-                            <textarea class="form-control" rows="5" name ="content" required></textarea>
+                            <textarea class="form-control" rows="5" name ="content" placeholder="Message text here..." required></textarea>
                           </div>
-                          <button type="submit" name="mail-submit" class="btn btn-primary">Submit</button>
+                          <button type="submit" name="mail-submit" class="btn btn-primary">Send Message</button>
                         </form>
                       </div>
                     </div>

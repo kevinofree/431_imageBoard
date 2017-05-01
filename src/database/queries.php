@@ -83,21 +83,6 @@
     return $query;
   }
 
-  function get_forums()
-  {
-    $query = "SELECT *";
-    $query .= "FROM FORUM";
-
-    return $query;
-  }
-
-  function get_forum_names()
-  {
-    $query = "SELECT ForumName";
-    $query .= "FROM FORUM";
-
-    return $query;
-  }
   //****************************************************
   //************* Mailbox System Queries ***************
   //****************************************************
@@ -115,19 +100,21 @@
   }
 
   // Retrieve all messages sent to user
-  function get_message_inbox()
+  function get_message_inbox($username)
   {
-    $query  = "SELECT MsgID, MsgText, Subject, MsgDate, Sender, Status FROM MAILBOX ";
-    $query .= "WHERE Receiver = '{$_SESSION['username']}' ORDER BY MsgDate DESC ;";
+    $query  = "SELECT * ";
+    $query .= "FROM MAILBOX ";
+    $query .= "WHERE Receiver = '{$username}' ";
+    $query .= "ORDER BY MsgDate DESC ;";
 
     return $query;
   }
 
   // Retrieve all messages sent by user
-  function get_message_sent()
+  function get_message_sent($username)
   {
-    $query  = "SELECT MsgID, MsgText, Subject, MsgDate, Receiver FROM MAILBOX ";
-    $query .= "WHERE Sender = '{$_SESSION['username']}' ORDER BY MsgDate DESC ;";
+    $query  = "SELECT * FROM MAILBOX ";
+    $query .= "WHERE Sender = '{$username}' ;";
 
     return $query;
   }
@@ -135,7 +122,7 @@
   function get_single_message($messageID)
   {
     $query = "SELECT * FROM MAILBOX ";
-    $query .= "WHERE MsgID = $messageID;";
+    $query .= "WHERE MessageID = $messageID;";
 
     return $query;
   }
@@ -144,7 +131,18 @@
   {
     $query = "UPDATE MAILBOX ";
     $query .= "SET Status = $status ";
-    $query .= "WHERE MsgID = $messageID;";
+    $query .= "WHERE MessageID = $messageID;";
+
+    return $query;
+  }
+
+  //****************************************************
+  //***************** Forum Queries ********************
+  //****************************************************
+  function get_forums()
+  {
+    $query = "SELECT *";
+    $query .= "FROM FORUM";
 
     return $query;
   }
@@ -152,10 +150,12 @@
   //****************************************************
   //*********** Threads and Posts Queries **************
   //****************************************************
-  function get_related_threads($forumName){
+  function get_related_threads($forumName)
+  {
     $query = "SELECT * FROM THREAD WHERE FName = '{$forumName}';";
     return $query;
   }
+
 
   //****************************************************
   //**************** Moderator Queries *****************

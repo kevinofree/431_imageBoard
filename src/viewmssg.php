@@ -2,29 +2,30 @@
 <?php require_once('./database/open-connection.php'); ?>
 <?php require_once('./database/queries.php'); ?>
 <?php require_once('./include/functions.php'); ?>
+<?php confirm_user_authentication(); ?>
 <?php
-  // Check whether the user is logged in.
-  confirm_user_authentication();
 
-  // Create database query
-  $messageID = $_GET['id'];
-  $query = get_single_message($messageID);
-  $user = $_SESSION['username'];
+  $message_id = $_GET['msg-id'];
+  $query = get_single_message($message_id);
+  $username = $_SESSION['username'];
+
 
   // Perform the query on the database
   $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
   $row = mysqli_fetch_assoc($result);
+
+  /*
   if($row['Receiver'] != $user || $row['Sender'] != $user)
   {
     redirect_to('inbox.php');
   }
+  */
 
   if($row['Status'] == 0)
   {
-    $query = update_message_status($messageID, 1);
-    $changed = mysqli_query($connection, $query) or die(mysqli_error($connection));
+    $query = update_message_status($message_id, 1);
+    $message_read = mysqli_query($connection, $query) or die(mysqli_error($connection));
   }
-
 ?>
 
 <!DOCTYPE html>
@@ -60,11 +61,12 @@
 
         <!-- Page Content -->
       <div id="page-content-wrapper">
+
         <div class="form-group">
-          <h4>Sender: <?php echo $row['Sender']?></h4>
+          <h4>From: <span id="message-sender"><?php echo $row['Sender']?></span></h4>
         </div>
         <div class="form-group">
-          <h4>Subject: <?php echo $row['Subject']?></h4>
+          <h4>Subject: <span id="message-subject"><?php echo $row['Subject']?></span></h4>
         </div>
         <div class="form-group">
           <textarea readonly class="form-control" rows=15><?php echo $row['MsgText'];?></textarea>
