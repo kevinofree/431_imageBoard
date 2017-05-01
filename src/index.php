@@ -35,7 +35,7 @@
   <!-- Content here -->
     <div class="container-fluid">
       <h1>Forums</h1>
-      <a id="post_thread"  class="btn btn-default pull-right" href="newthread.php?forum=<?php echo $forumtype ?>">Request New Forum</a>
+      <a id="post_thread"  class="btn btn-default pull-right" href="request.php??>">Request New Forum</a>
       <table class="table table-striped table-bordered">
         <thead class="thead-inverse">
         <th></th>
