@@ -139,7 +139,7 @@ var $main = function() {
   }
 
   // call this every three seconds
-  setInterval(get_updated_chats_ajax_request, 3000);
+  setInterval(get_updated_chats_ajax_request, 2000);
 
   function get_updated_chats_ajax_request() {
     var roomID = $('#room-id').val();
@@ -183,6 +183,49 @@ var $main = function() {
     }
     xhr.send(sendData);
   }
+
+  // call this every three seconds
+  setInterval(leave_chatroom_ajax_request, 5000);
+  //leave_chatroom_ajax_request();
+
+  function leave_chatroom_ajax_request() {
+
+    var roomID = $('#room-id').val();
+    var sendData = 'room-id=' + roomID;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'ajax-leave-chatroom.php', true);
+
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    xhr.onreadystatechange = function() {
+
+      if(xhr.readyState == 4 && xhr.status == 200) {
+        $('.chatroom-list').empty();
+
+        var display = JSON.parse(xhr.responseText);
+        var len = display.users.length;
+
+        for(var i = 0; i < len; ++i) {
+          var row = '<tr class="chatroom-list">';
+          var rowData = '<td>';
+          var span = '<span class="glyphicon glyphicon-ok-sign"></span>&nbsp;';
+          var userSpan = '<span class="connected-user">';
+          var user = display.users[i].username;
+          var userSpanEnd = '</span>';
+          var endData = '</td>';
+          var endRow = '</tr>';
+
+          var insertData = row + rowData + span + userSpan + user + userSpanEnd + endData + endRow;
+
+          $('#chat-list-tbody').append(insertData);
+        }
+      }
+    }
+    xhr.send(sendData);
+  }
+
   // Listens when the user clicks on the send button
   $('#sendChat').on('click', function() {
     send_chat_ajax_request();

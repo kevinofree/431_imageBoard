@@ -3,19 +3,51 @@
 <?php require_once('./database/queries.php'); ?>
 <?php require_once('./include/functions.php'); ?>
 <?php confirm_user_authentication(); ?>
+<?php
+  $username = $_SESSION['username'];
+  $room_id = $_GET['room-id'];
 
+  // search query
+  $query = $query = get_chatroom_user_query($room_id);
+  $result = mysqli_query($connection, $query);
+
+  $found = false;
+
+  while($chatroom_user = mysqli_fetch_assoc($result))
+  {
+    if($chatroom_user['User'] == $username)
+    {
+      $found = true;
+    }
+  }
+
+  unset($query);
+  unset($result);
+
+  // if user is not found add the user
+  if(!$found)
+  {
+    // add user to the chatroom list
+    $query = add_chatroom_user_query($username, $room_id);
+    $result = mysqli_query($connection, $query);
+  }
+
+  unset($query);
+  unset($result);
+
+  // retrieve the chatroom list
+  $query = get_chatroom_user_query($room_id);
+  $result = mysqli_query($connection, $query);
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
-
     <title>GyroChan</title>
-
     <!-- Bootstrap Core CSS -->
     <?php include "bootstrap.php"; ?>
-
     <!-- Custom CSS -->
     <link href="css/sidebar.css" rel="stylesheet">
     <link href="css/chatroom-style.css" rel="stylesheet">
@@ -50,34 +82,26 @@
                           </th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <span class="glyphicon glyphicon-ok-sign"></span>&nbsp;
-                            <span class="connected-user">SAMPLE_USER10</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <span class="glyphicon glyphicon-ok-sign"></span>&nbsp;
-                            <span class="connected-user">SAMPLE USER11</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <span class="glyphicon glyphicon-ok-sign"></span>&nbsp;
-                            <span class="connected-user">SAMPLE USER12</span>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <form method="GET" action="dashboard.php">
-                              <input class="btn btn-warning btn-block" type="submit" value="Leave Chatroom">
-                            </form>
-                          </td>
-                        </tr>
+                      <tbody id="chat-list-tbody">
+                          <?php
+                            while($chatroom_user = mysqli_fetch_assoc($result))
+                            {
+                              echo '<tr class="chatroom-list">';
+                              echo '<td>';
+                              echo '<span class="glyphicon glyphicon-ok-sign"></span>&nbsp;';
+                              echo '<span class="connected-user">' . $chatroom_user['User'] .'</span>';
+                              echo '</td>';
+                              echo '</tr>';
+                            }
+
+                            mysqli_free_result($result);
+                          ?>
                       </tbody>
                     </table>
+                    <form method="POST" action="dashboard.php">
+                      <input type="hidden" name="room-id" value="<?= $_GET['room-id'] ?>">
+                      <input class="btn btn-warning btn-block" type="submit" value="Leave Chatroom">
+                    </form>
                   </div>
                   <div class="col-md-8">
                     <div class="panel panel-default">
