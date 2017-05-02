@@ -83,6 +83,35 @@
     return $query;
   }
 
+  function get_chatroom_user_query($room_id)
+  {
+    $query  = "SELECT * ";
+    $query .= "FROM CHATROOMUSER ";
+    $query .= "WHERE RoomNo = $room_id";
+
+    return $query;
+  }
+
+  function add_chatroom_user_query($username, $room_id)
+  {
+    $query  = "INSERT INTO CHATROOMUSER (";
+    $query .= "User, RoomNo";
+    $query .= ") VALUES (";
+    $query .= "'{$username}', $room_id";
+    $query .= ");";
+
+    return $query;
+  }
+
+  function remove_chatroom_user_query($username, $room_id)
+  {
+    $query  = "DELETE FROM CHATROOMUSER ";
+    $query .= "WHERE ";
+    $query .= "User = '{$username}' AND RoomNo = $room_id";
+
+    return $query;
+  }
+
   //****************************************************
   //************* Mailbox System Queries ***************
   //****************************************************

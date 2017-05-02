@@ -2,10 +2,15 @@
 <?php require_once('./database/open-connection.php'); ?>
 <?php require_once('./database/queries.php'); ?>
 <?php require_once('./include/functions.php'); ?>
+<?php confirm_user_authentication(); ?>
 <?php
-  // Check whether the user is logged in.
-  confirm_user_authentication();
+  // Remove the user from the chatroom list
+  $username = $_SESSION['username'];
+  $room_id = $_POST['room-id'];
+  $query = remove_chatroom_user_query($username, $room_id);
+  $result = mysqli_query($connection, $query);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
