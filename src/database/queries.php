@@ -175,6 +175,15 @@
 
     return $query;
   }
+  function request_forum($forumname, $description, $user)
+  {
+    $query  = "INSERT INTO REQUESTS (";
+    $query .= "FName, Description, RequestedBy";
+    $query .= ") VALUES (";
+    $query .= "'{$forumname}', '{$description}', '{$user}'";
+    $query .= ");";
+    return $query;
+  }
 
   //****************************************************
   //*********** Threads and Posts Queries **************

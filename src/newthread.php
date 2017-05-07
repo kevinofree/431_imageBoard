@@ -5,17 +5,17 @@
 <?php
   // Check whether the user is logged in.
   confirm_user_authentication();
-  
+
   $forum_name = '';
   if (isset($_GET['forum'])) {
       $forum_name = $_GET['forum'];
   }
 
   if (isset($_POST['thread-submit'])) {
-      // Get form data
-      $title = $_POST['title'];
-      $content = $_POST['content'];
-      $start_user= $_SESSION['username'];
+    // Get form data
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $start_user= $_SESSION['username'];
 
     // ThreadStatuses:
     // New = 0
@@ -67,7 +67,7 @@
     <div class="container">
       <h1>Create a Thread in <?php echo $forum_name; ?></h1>
     </div>
-    <div iv class="col-lg-5 col-lg-offset-3">
+    <div class="col-lg-5 col-lg-offset-3">
       <form method="POST">
          <br>
          <?php

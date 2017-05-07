@@ -64,6 +64,7 @@
 
         <div class="form-group">
           <h4>From: <span id="message-sender"><?php echo $row['Sender']?></span></h4>
+          <h4>From: <span id="message-sender"><?php echo $row['Receiver']?></span></h4>
         </div>
         <div class="form-group">
           <h4>Subject: <span id="message-subject"><?php echo $row['Subject']?></span></h4>

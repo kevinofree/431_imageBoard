@@ -117,5 +117,5 @@ CREATE TABLE REQUESTS
   FName varchar(64) NOT NULL,
   Description text NOT NULL,
   RequestedBy varchar(32) NOT NULL,
-  FOREIGN KEY (RequestedBy) REFERENCES FORUM(ForumName)
+  FOREIGN KEY (RequestedBy) REFERENCES USER(Username)
 );
