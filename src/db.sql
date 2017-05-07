@@ -71,7 +71,7 @@ CREATE TABLE THREAD
 (
   ThreadNo int(11) NOT NULL AUTO_INCREMENT,
   FName varchar(64) NOT NULL,
-  TDate DateTime NOT NULL,
+  TDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   Status tinyint NOT NULL,
   Title varchar(20),
   Content text NOT NULL,

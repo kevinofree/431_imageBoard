@@ -78,7 +78,7 @@
 
                           // Receiver
                           echo '<td>';
-                          echo '<form method="GET" action="">';
+                          echo '<form method="GET" action="viewmssg.php">';
                           echo '<input type="hidden" name="msg-id" value="' . $sent['MsgID'] . '">';
                           echo '<button type="submit" class="btn btn-link">';
                           echo $sent['Receiver'];

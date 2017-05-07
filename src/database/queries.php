@@ -151,7 +151,7 @@
   function get_single_message($messageID)
   {
     $query = "SELECT * FROM MAILBOX ";
-    $query .= "WHERE MessageID = $messageID;";
+    $query .= "WHERE MsgID = $messageID;";
 
     return $query;
   }
@@ -160,7 +160,7 @@
   {
     $query = "UPDATE MAILBOX ";
     $query .= "SET Status = $status ";
-    $query .= "WHERE MessageID = $messageID;";
+    $query .= "WHERE MsgID = $messageID;";
 
     return $query;
   }
@@ -185,6 +185,15 @@
     return $query;
   }
 
+  function create_thread_query($forumname, $status, $title, $content, $start_user)
+  {
+    $query  = "INSERT INTO THREAD (";
+    $query .= "FName, Status, Title, Content, StartUser";
+    $query .= ") VALUES (";
+    $query .= "'{$forumname}', '{$status}', '{$title}', '{$content}', '{$start_user}'";
+    $query .= ");";
+    return $query;
+  }
 
   //****************************************************
   //**************** Moderator Queries *****************
