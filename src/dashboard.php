@@ -5,10 +5,13 @@
 <?php confirm_user_authentication(); ?>
 <?php
   // Remove the user from the chatroom list
-  $username = $_SESSION['username'];
-  $room_id = $_POST['room-id'];
-  $query = remove_chatroom_user_query($username, $room_id);
-  $result = mysqli_query($connection, $query);
+  if($_SERVER['REQUEST_METHOD'] === 'POST')
+  {
+    $username = $_SESSION['username'];
+    $room_id = $_POST['room-id'];
+    $query = remove_chatroom_user_query($username, $room_id);
+    $result = mysqli_query($connection, $query);
+  }
 ?>
 
 
@@ -48,7 +51,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h1>Welcome <?php echo $_SESSION['username']; ?></h1>
+              <h1>Welcome <?php $_SERVER['HTTP_REFERER']; echo $_SESSION['username']; ?></h1>
               <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                   <?php
