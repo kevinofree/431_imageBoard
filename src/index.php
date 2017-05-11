@@ -6,7 +6,6 @@
   $query = get_forums();
   $result = mysqli_query($connection, $query);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>

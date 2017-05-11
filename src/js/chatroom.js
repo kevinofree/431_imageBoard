@@ -1,56 +1,40 @@
+/*
+  Written by Noe Rojas for GyroChan
+  CPSC 431 Database Applications
+  May 10, 2017
+*/
 var $main = function() {
   // Retrieve the entire chat history for the room
   get_chatlog_ajax_request();
-
   function get_chatlog_ajax_request() {
-
     // Get the room number
     var roomID = $('#room-id').val();
-
     // Create the POST request data object
     var sendData = 'room-id=' + roomID;
-
     // Create new xhr object
     var xhr = new XMLHttpRequest();
-
     // Open a POST request with the URL request-chatlog.php. Set to TRUE for an asynchronous request
     xhr.open('POST', 'ajax-getchatlog.php', true);
-
     // Set the content headers for the AJAX request
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
     // Define on ready state change. This function gets called every time readyState changes.
     // It is a XML HTTP Object function.
     xhr.onreadystatechange = function() {
-
-      // Output readystate
-      console.log('readyState : ' + xhr.readyState);
-
-      // Check for ready state 2, request sent, received by server
-      if(xhr.readyState == 2) {
-        console.log("Loading....");
-      }
-
       // Check for ready state 4 and stutus code 200, reponse complete (sucess or failure)
       if(xhr.readyState == 4 && xhr.status == 200) {
-
-        //console.log(xhr.responseText);
-
         //Parse the JSON Object
         var display = JSON.parse(xhr.responseText);
         var len = display.chatlog.length;
-
         // Post the entire history of the chat
         for(var i = 0; i < len; i++) {
-
           var listBegin = '<li class="left clearfix">';
           var spanBegin = '<span class="chat-img pull-left">';
           var image = '<img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />';
           var spanEnd = '</span>';
           var chatBodyBegin = '<div class="chat-body clearfix">';
           var chatHeaderBegin = '<div class="header">';
-          var strongUsername = '<strong class="primary-font">' + display.chatlog[i].chatSentBy + '</strong>';
+          var strongUsername = '<strong class="primary-font"><a href="profile.php?user=' + display.chatlog[i].chatSentBy + '">' + display.chatlog[i].chatSentBy + '</a></strong>';
           var smallMutedBegin = '<small class="pull-right text-muted">';
           var glyph = '<span class="glyphicon glyphicon-time"></span>';
           var timeSent = 'sent: ' + display.chatlog[i].chatTimeSent;
@@ -61,12 +45,10 @@ var $main = function() {
           var messageParaEnd = '</p>';
           var chatBodyEnd = '</div>';
           var listEnd = '</li>';
-
           var insertMessage = listBegin + spanBegin + image + spanEnd + chatBodyBegin;
           insertMessage += chatHeaderBegin + strongUsername + smallMutedBegin + glyph;
           insertMessage += timeSent + smallMutedEnd + chatHeaderEnd + messageParaBegin;
           insertMessage += userMessage + messageParaEnd + chatBodyEnd + listEnd;
-
           // append to the chat area
           $('#chat').append(insertMessage);
         }
@@ -82,60 +64,56 @@ var $main = function() {
   */
   function send_chat_ajax_request() {
     var chatMessage = $('#chat-input').val();
-    var roomID = $('#room-id').val();
-    var roomName = $('#room-name').val();
-    var sendData = 'chat-text=' + chatMessage + '&' + 'room-id=' + roomID + '&' + 'room-name=' + roomName;
-    // Create new xhr object
-    var xhr = new XMLHttpRequest();
-    // Open a POST request with the URL request-chatlog.php. Set to TRUE for an asynchronous request
-    xhr.open('POST', 'ajax-savechat.php', true);
-    // Set the content headers for the AJAX request
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    // Define on ready state change. This function gets called every time readyState changes.
-    // It is a XML HTTP Object function.
-    xhr.onreadystatechange = function() {
-      // Output readystate
-      console.log('readyState : ' + xhr.readyState);
-      // Check for ready state 2, request sent, received by server
-      if(xhr.readyState == 2) {
-        console.log("Loading....");
+    if(chatMessage) {
+      var roomID = $('#room-id').val();
+      var roomName = $('#room-name').val();
+      var sendData = 'chat-text=' + chatMessage + '&' + 'room-id=' + roomID + '&' + 'room-name=' + roomName;
+      // Create new xhr object
+      var xhr = new XMLHttpRequest();
+      // Open a POST request with the URL request-chatlog.php. Set to TRUE for an asynchronous request
+      xhr.open('POST', 'ajax-savechat.php', true);
+      // Set the content headers for the AJAX request
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      // Define on ready state change. This function gets called every time readyState changes.
+      // It is a XML HTTP Object function.
+      xhr.onreadystatechange = function() {
+        // Check for ready state 4 and stutus code 200, reponse complete (sucess or failure)
+        if(xhr.readyState == 4 && xhr.status == 200) {
+          //Parse the JSON Object
+          var display = JSON.parse(xhr.responseText);
+          var len = display.chatlog.length;
+          // Only post the most recent chat
+          var listBegin = '<li class="left clearfix">';
+          var spanBegin = '<span class="chat-img pull-left">';
+          var image = '<img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />';
+          var spanEnd = '</span>';
+          var chatBodyBegin = '<div class="chat-body clearfix">';
+          var chatHeaderBegin = '<div class="header">';
+          var strongUsername = '<strong class="primary-font"><a href="profile.php?user=' + display.chatlog[len - 1].chatSentBy + '">' + display.chatlog[len - 1].chatSentBy + '</a></strong>';
+          var smallMutedBegin = '<small class="pull-right text-muted">';
+          var glyph = '<span class="glyphicon glyphicon-time"></span>';
+          var timeSent = 'sent: ' + display.chatlog[len - 1].chatTimeSent;
+          var smallMutedEnd = '</small>';
+          var chatHeaderEnd = '</div>'
+          var messageParaBegin = '<p>';
+          var userMessage = display.chatlog[len - 1].chatText;
+          var messageParaEnd = '</p>';
+          var chatBodyEnd = '</div>';
+          var listEnd = '</li>';
+          var insertMessage = listBegin + spanBegin + image + spanEnd + chatBodyBegin;
+          insertMessage += chatHeaderBegin + strongUsername + smallMutedBegin + glyph;
+          insertMessage += timeSent + smallMutedEnd + chatHeaderEnd + messageParaBegin;
+          insertMessage += userMessage + messageParaEnd + chatBodyEnd + listEnd;
+          // append to the chat area
+          $('#chat').append(insertMessage);
+          // Clear the previous value in the chat input
+          $('#chat-input').val('');
+        }
       }
-      // Check for ready state 4 and stutus code 200, reponse complete (sucess or failure)
-      if(xhr.readyState == 4 && xhr.status == 200) {
-        //Parse the JSON Object
-        var display = JSON.parse(xhr.responseText);
-        var len = display.chatlog.length;
-        // Only post the most recent chat
-        var listBegin = '<li class="left clearfix">';
-        var spanBegin = '<span class="chat-img pull-left">';
-        var image = '<img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />';
-        var spanEnd = '</span>';
-        var chatBodyBegin = '<div class="chat-body clearfix">';
-        var chatHeaderBegin = '<div class="header">';
-        var strongUsername = '<strong class="primary-font">' + display.chatlog[len - 1].chatSentBy + '</strong>';
-        var smallMutedBegin = '<small class="pull-right text-muted">';
-        var glyph = '<span class="glyphicon glyphicon-time"></span>';
-        var timeSent = 'sent: ' + display.chatlog[len - 1].chatTimeSent;
-        var smallMutedEnd = '</small>';
-        var chatHeaderEnd = '</div>'
-        var messageParaBegin = '<p>';
-        var userMessage = display.chatlog[len - 1].chatText;
-        var messageParaEnd = '</p>';
-        var chatBodyEnd = '</div>';
-        var listEnd = '</li>';
-        var insertMessage = listBegin + spanBegin + image + spanEnd + chatBodyBegin;
-        insertMessage += chatHeaderBegin + strongUsername + smallMutedBegin + glyph;
-        insertMessage += timeSent + smallMutedEnd + chatHeaderEnd + messageParaBegin;
-        insertMessage += userMessage + messageParaEnd + chatBodyEnd + listEnd;
-        // append to the chat area
-        $('#chat').append(insertMessage);
-        // Clear the previous value in the chat input
-        $('#chat-input').val('');
-      }
+      // Send the asynchronous request
+      xhr.send(sendData);
     }
-    // Send the asynchronous request
-    xhr.send(sendData);
   }
 
   // call this every three seconds
@@ -154,6 +132,7 @@ var $main = function() {
         $('#chat').empty();
         var display = JSON.parse(xhr.responseText);
         var len = display.chatlog.length;
+
         for(var i = 0; i < len; i++) {
           var listBegin = '<li class="left clearfix">';
           var spanBegin = '<span class="chat-img pull-left">';
@@ -161,7 +140,7 @@ var $main = function() {
           var spanEnd = '</span>';
           var chatBodyBegin = '<div class="chat-body clearfix">';
           var chatHeaderBegin = '<div class="header">';
-          var strongUsername = '<strong class="primary-font">' + display.chatlog[i].chatSentBy + '</strong>';
+          var strongUsername = '<strong class="primary-font"><a href="profile.php?user=' + display.chatlog[i].chatSentBy + '">' + display.chatlog[i].chatSentBy + '</a></strong>';
           var smallMutedBegin = '<small class="pull-right text-muted">';
           var glyph = '<span class="glyphicon glyphicon-time"></span>';
           var timeSent = 'sent: ' + display.chatlog[i].chatTimeSent;
@@ -189,24 +168,17 @@ var $main = function() {
   //leave_chatroom_ajax_request();
 
   function leave_chatroom_ajax_request() {
-
     var roomID = $('#room-id').val();
     var sendData = 'room-id=' + roomID;
-
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'ajax-leave-chatroom.php', true);
-
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
     xhr.onreadystatechange = function() {
-
       if(xhr.readyState == 4 && xhr.status == 200) {
         $('.chatroom-list').empty();
-
         var display = JSON.parse(xhr.responseText);
         var len = display.users.length;
-
         for(var i = 0; i < len; ++i) {
           var row = '<tr class="chatroom-list">';
           var rowData = '<td>';
@@ -216,9 +188,7 @@ var $main = function() {
           var userSpanEnd = '</span>';
           var endData = '</td>';
           var endRow = '</tr>';
-
           var insertData = row + rowData + span + userSpan + user + userSpanEnd + endData + endRow;
-
           $('#chat-list-tbody').append(insertData);
         }
       }
