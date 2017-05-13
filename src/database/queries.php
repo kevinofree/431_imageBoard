@@ -204,6 +204,22 @@
     return $query;
   }
 
+  function get_posts($threadNo)
+  {
+    $query = "SELECT PostText, PostDate, Poster FROM POST WHERE ThreadNo = '{$threadNo}';";
+    return $query;
+  }
+
+  function post_reply($username, $post, $threadNo)
+  {
+    $query  = "INSERT INTO POST (";
+    $query .= "Poster, PostText, ThreadNo";
+    $query .= ") VALUES (";
+    $query .= "'{$username}', '{$post}', '{$threadNo}'";
+    $query .= ");";
+    return $query;
+  }
+
   //****************************************************
   //**************** Moderator Queries *****************
   //****************************************************

@@ -63,7 +63,6 @@ CREATE TABLE FORUM
   Status tinyint(1) NOT NULL,
   Description text NOT NULL,
   Moderator varchar(32) NOT NULL,
-
   FOREIGN KEY (Moderator) REFERENCES USER(Username),
   PRIMARY KEY (ForumName)
 );
@@ -87,8 +86,10 @@ CREATE TABLE POST
 (
   PostNo int not NULL AUTO_INCREMENT,
   PostText varchar(250),
-  PostDate DateTime NOT NULL,
+  PostDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   ThreadNo int(11) NOT NULL,
+  Poster varchar(32) NOT NULL,
+  FOREIGN KEY (Poster) REFERENCES USER(Username),
   FOREIGN KEY (ThreadNo) REFERENCES THREAD(ThreadNo),
   PRIMARY KEY (PostNo)
 );
