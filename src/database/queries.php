@@ -206,7 +206,7 @@
 
   function get_posts($threadNo)
   {
-    $query = "SELECT PostText, PostDate, Poster FROM POST WHERE ThreadNo = '{$threadNo}';";
+    $query = "SELECT PostText, PostDate, Poster, PostNo FROM POST WHERE ThreadNo = '{$threadNo}';";
     return $query;
   }
 
@@ -217,6 +217,12 @@
     $query .= ") VALUES (";
     $query .= "'{$username}', '{$post}', '{$threadNo}'";
     $query .= ");";
+    return $query;
+  }
+
+  function update_post($content, $postNo)
+  {
+    $query  = "UPDATE POST SET PostText='{$content}' WHERE PostNo='{$postNo}';";
     return $query;
   }
 

@@ -47,7 +47,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
     <link href="css/styles.css" rel="stylesheet">
-
     <title>GyroChan</title>
     <!-- Bootstrap Core CSS -->
     <?php include "bootstrap.php"; ?>
@@ -90,6 +89,9 @@
                 echo "<td><a href='profile.php?user={$reply['Poster']}'>{$reply['Poster']}</a></td>";
                 echo "<td>{$reply['PostText']}</td>";
                 echo "<td>{$reply['PostDate']}</td>";
+                if($_SESSION['username'] ==$reply['Poster'] ){
+                  echo "<td><a href='editpost.php?pid={$reply['PostNo']}&tid={$threadNo}'>Edit</a></td>";
+                }
                 echo "</tr>";
             }
           ?>
