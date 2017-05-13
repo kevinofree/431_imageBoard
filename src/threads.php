@@ -18,8 +18,18 @@
     // Get the clients username stored in the session
     $username = $_SESSION['username'];
 
-    // create a query for their post
-    $query = post_reply($username, $post, $threadNo);
+    // Check if file was uploaded
+    if(is_uploaded_file($_FILES['image']['tmp_name'])){
+      // Santize image before inserting into mysql
+      $_SESSION['success_message'] = 'Post Submitted!';
+      $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+      $query = post_reply($username, $post, $image, $threadNo);
+    }
+    else{
+      // No file was uploaded
+      $_SESSION['fail_message'] = "Failed to Submit.";
+      $query = post_reply($username, $post, "", $threadNo);
+    }
 
     // Perform the query on the database
     $result = mysqli_query($connection, $query);
@@ -58,7 +68,7 @@
   <body>
     <div clas="container-fluid">
         <div class="col-lg-5 col-lg-offset-3">
-          <form method="POST">
+          <form method="POST" enctype="multipart/form-data">
             <?php
               if(isset($_SESSION['success_message']))
               {
@@ -74,22 +84,34 @@
               <label for="content">Reply</label>
                 <textarea class="form-control" rows="5" name ="content" placeholder="Reply text here..." required></textarea>
             </div>
+            <div class="form-group">
+              <input type="file" name="image">
+            </div>
             <hr>
             <button type="submit" name="post-submit" class="btn btn-primary">Submit</button>
           </form>
+          <br>
         </div>
       </div>
       <hr>
       <div class="container-fluid">
-        <table class="table table-hover" align="center">
+        <table class="table table-hover">
         <tbody>
           <?php
             while ($reply=mysqli_fetch_assoc($result)) {
                 echo "<tr>";
                 echo "<td><a href='profile.php?user={$reply['Poster']}'>{$reply['Poster']}</a></td>";
+                if($reply['Photodata'] != ""){
+                  echo '<td><img src="data:image/jpeg/;base64,' .
+                        base64_encode($reply['Photodata']) .
+                        '" height="300" width="300" /></td>';
+                }
+                else {
+                  echo "<td></td>";
+                }
                 echo "<td>{$reply['PostText']}</td>";
                 echo "<td>{$reply['PostDate']}</td>";
-                if($_SESSION['username'] ==$reply['Poster'] ){
+                if($_SESSION['username'] == $reply['Poster'] ){
                   echo "<td><a href='editpost.php?pid={$reply['PostNo']}&tid={$threadNo}'>Edit</a></td>";
                 }
                 echo "</tr>";

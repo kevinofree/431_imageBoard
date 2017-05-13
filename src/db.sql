@@ -89,6 +89,7 @@ CREATE TABLE POST
   PostDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   ThreadNo int(11) NOT NULL,
   Poster varchar(32) NOT NULL,
+  Image longblog.
   FOREIGN KEY (Poster) REFERENCES USER(Username),
   FOREIGN KEY (ThreadNo) REFERENCES THREAD(ThreadNo),
   PRIMARY KEY (PostNo)

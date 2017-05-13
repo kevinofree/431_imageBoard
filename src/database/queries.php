@@ -206,16 +206,16 @@
 
   function get_posts($threadNo)
   {
-    $query = "SELECT PostText, PostDate, Poster, PostNo FROM POST WHERE ThreadNo = '{$threadNo}';";
+    $query = "SELECT PostText, PostDate, Poster, PostNo, Photodata FROM POST WHERE ThreadNo = '{$threadNo}';";
     return $query;
   }
 
-  function post_reply($username, $post, $threadNo)
+  function post_reply($username, $post, $image, $threadNo)
   {
     $query  = "INSERT INTO POST (";
-    $query .= "Poster, PostText, ThreadNo";
+    $query .= "Poster, PostText, Photodata, ThreadNo";
     $query .= ") VALUES (";
-    $query .= "'{$username}', '{$post}', '{$threadNo}'";
+    $query .= "'{$username}', '{$post}', '{$image}' ,'{$threadNo}'";
     $query .= ");";
     return $query;
   }
