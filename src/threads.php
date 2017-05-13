@@ -21,13 +21,11 @@
     // Check if file was uploaded
     if(is_uploaded_file($_FILES['image']['tmp_name'])){
       // Santize image before inserting into mysql
-      $_SESSION['success_message'] = 'Post Submitted!';
       $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
       $query = post_reply($username, $post, $image, $threadNo);
     }
     else{
       // No file was uploaded
-      $_SESSION['fail_message'] = "Failed to Submit.";
       $query = post_reply($username, $post, "", $threadNo);
     }
 
