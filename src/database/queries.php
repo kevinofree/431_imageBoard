@@ -5,14 +5,14 @@
   //*****************************************************
 
   // Create new user
-  function register_user_query($username, $password, $fullname, $status)
+  function register_user_query($username, $password, $fullname, $profile_image, $status)
   {
     // Encrypt password using MD5 algorithm
     $hash = md5($password);
     $query  = "INSERT INTO USER (";
-    $query .= "Username, Password, Fullname, Status";
+    $query .= "Username, Password, Fullname, ProfilePic, Status";
     $query .= ") VALUES (";
-    $query .= "'{$username}', '{$hash}', '{$fullname}', $status";
+    $query .= "'{$username}', '{$hash}', '{$fullname}', '{$profile_image}', $status";
     $query .= ");";
 
     return $query;
@@ -43,9 +43,24 @@
     return $query;
   }
 
-  //select users
+  // Get user info
   function get_user($username)
   {
+    $query  = "SELECT * ";
+    $query .= "FROM USER ";
+    $query .= "WHERE Username = '{$username}'";
+
+    return $query;
+  }
+
+  // Update profile picture
+  function update_profile_image_query($username, $image_data)
+  {
+    $query = "UPDATE USER ";
+    $query .= "SET ProfilePic = '{$image_data}' ";
+    $query .= "WHERE Username = '{$username}'";
+
+    return $query;
   }
 
   //****************************************************

@@ -3,7 +3,9 @@ CREATE TABLE USER
   Username varchar(32) NOT NULL UNIQUE,
   Password varchar(32) NOT NULL,
   Fullname varchar(64) NOT NULL,
+  ProfilePic longblob NOT NULL,
   Status tinyint(1) NOT NULL,
+
   PRIMARY KEY (Username)
 );
 

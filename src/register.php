@@ -16,11 +16,15 @@
     $password = $_POST['password'];
     $fullname = $_POST['fullname'];
 
+    // Set profile pic to default profile. Get the path to the image
+    $image_path = "/var/www/html/apps/s28/GyroChan/431_imageBoard/src/img/profile.jpg";
+    $default_profile_image = addslashes(file_get_contents($image_path));
+
     // New default user
     $status = 0;
 
     // Create database query for a newly registered user
-    $query = register_user_query($username, $password, $fullname, $status);
+    $query = register_user_query($username, $password, $fullname, $default_profile_image, $status);
 
     // Perform the query on the database
     $result = mysqli_query($connection, $query);
