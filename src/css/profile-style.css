@@ -1,0 +1,16 @@
+.user-info {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#fullname {
+  color: #34495E;
+}
+
+.username {
+  color: #21618C;
+}
+
+#status {
+  color: #CD5C5C;
+}
