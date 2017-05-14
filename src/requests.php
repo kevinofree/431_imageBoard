@@ -5,15 +5,12 @@
 <?php
   // Check whether the user is logged in.
   confirm_user_authentication();
+  confirm_admin_authentication();
 
-  $username = $_SESSION['username'];
-
-  // Create database query
-  $query = get_message_inbox($username);
-
-  // Perform the query on the database
+  $query = view_requests();
   $result = mysqli_query($connection, $query);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -44,7 +41,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12">
-              <h1>Inbox</h1>
+              <h1>Forum Requests</h1>
               <br>
               <div class="row">
                 <div class="col-md-9">
@@ -52,53 +49,32 @@
                     <thead>
                       <tr>
                         <th>
-                          Message Subject
+                           Forum Request
                         </th>
                         <th>
-                          From
-                        </th>
-                        <th>
-                          Date
+                          Requested By
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
 
-                        while($inbox = mysqli_fetch_assoc($result))
+                        while($requests = mysqli_fetch_assoc($result))
                         {
-
-                          if($inbox['Status'] == 0)
-                          {
-                            $class = 'class="bg-warning"';
-                          }
-                          else
-                          {
-                            $class = '';
-                          }
-
                           // Subject
-                          echo "<tr $class>";
+                          echo '<tr>';
                           echo '<td>';
-                          echo '<form method="GET" action="viewmssg.php">';
-                          echo '<input type="hidden" name="msg-id" value="' . $inbox['MsgID'] . '">';
+                          echo '<form method="GET" action="viewreq.php">';
+                          echo '<input type="hidden" name="reqID" value="' . $requests['RequestID'] . '">';
                           echo '<button type="submit" class="btn btn-link">';
-                          echo $inbox['Subject'];
+                          echo $requests['FName'];
                           echo '</button>';
                           echo '</form>';
                           echo '</td>';
 
                           // Sender
                           echo '<td>';
-                          echo '<span class="msg-date">';
-                          echo $inbox['Sender'];
-                          echo '</span>';
-                          echo '</td>';
-
-                          // Date
-                          echo '<td>';
-                          echo '<span class="msg-date">';
-                          echo $inbox['MsgDate'];
+                          echo $requests['RequestedBy'];
                           echo '</span>';
                           echo '</td>';
                           echo '</tr>';

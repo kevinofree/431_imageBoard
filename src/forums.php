@@ -6,8 +6,27 @@
   // Check whether the user is logged in.
   confirm_user_authentication();
   $forumtype = $_GET['forum'];
-  $query = get_related_threads($forumtype);
+  $query = get_related_threads($_SESSION['username'], $forumtype);
   $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+
+  if(isset($_POST['action']))
+  {
+    $threadno = $_POST['threadno'];
+    $rankno = $_POST['rankID'];
+    if($_POST['action'] == 'thumsdown')
+    {
+      $query = rank_thread($rankno, $_SESSION['username'], 2, $threadno);
+      mysqli_query($connection, $query) or die(mysqli_error($connection));
+    }
+    elseif ($_POST['action'] == 'thumbsup') {
+      $query = rank_thread($rankno, $_SESSION['username'], 1, $threadno);
+      mysqli_query($connection, $query) or die(mysqli_error($connection));
+    }
+    unset($query);
+    redirect_to("forums.php?forum={$forumtype}");
+  }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -46,14 +65,38 @@
         <th>Thread</th>
         <th>Description</th>
         <th>Created By</th>
+        <th>Actions</th>
         </thead>
       <tbody>
       <?php
         while ($threads=mysqli_fetch_assoc($result)) {
+            $thumbsup = '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>';
+            $thumbsdown = '<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>';
             echo "<tr>";
             echo "<td><a href='threads.php?thread={$threads['ThreadNo']}'>{$threads['Title']}</a></td>";
             echo "<td>{$threads['Content']}</td>";
             echo "<td><a href='profile.php?user={$threads['StartUser']}'>{$threads['StartUser']}</a></td>";
+            if($threads['Ranking'] == 1)
+            {
+              $thumbsup = '<i class="fa fa-thumbs-up" aria-hidden="true"></i>';
+            }
+            else if ($threads['Ranking'] == 2)
+            {
+              $thumbsdown = '<i class="fa fa-thumbs-down" aria-hidden="true"></i>';
+            }
+
+            echo "<td>";
+            echo "<form method='post' action='forums.php?forum={$forumtype}'>";
+            echo "<input type='hidden' name='threadno' value='{$threads['ThreadNo']}'>";
+            echo "<input type='hidden' name='rankID' value='{$threads['RankID']}'>";
+            echo '<button type="submit" name="action" value="thumsdown">';
+            echo $thumbsdown;
+            echo '</button>';
+            echo '<button type="submit" name="action" value="thumbsup">';
+            echo $thumbsup;
+            echo '</button>';
+            echo '</form>';
+            echo "</td>";
             echo "</tr>";
         }
       ?>

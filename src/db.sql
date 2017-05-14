@@ -91,7 +91,7 @@ CREATE TABLE POST
   PostDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   ThreadNo int(11) NOT NULL,
   Poster varchar(32) NOT NULL,
-  Image longblog.
+  Image LONGBLOB,
   FOREIGN KEY (Poster) REFERENCES USER(Username),
   FOREIGN KEY (ThreadNo) REFERENCES THREAD(ThreadNo),
   PRIMARY KEY (PostNo)
@@ -99,12 +99,12 @@ CREATE TABLE POST
 
 CREATE TABLE RANK
 (
+  RankID int(11) NOT NULL AUTO_INCREMENT,
   Username varchar(32) NOT NULL,
-  FN varchar(30) NOT NULL,
   ThNo int NOT NULL,
   Ranking int NOT NULL,
+  PRIMARY KEY(RankID),
   FOREIGN KEY (Username) REFERENCES USER(Username),
-  FOREIGN KEY (FN) REFERENCES FORUM(ForumName),
   FOREIGN KEY (ThNo) REFERENCES THREAD(ThreadNo)
 );
 
@@ -119,8 +119,10 @@ CREATE TABLE BANNED
 
 CREATE TABLE REQUESTS
 (
+  RequestID int not NULL AUTO_INCREMENT,
   FName varchar(64) NOT NULL,
   Description text NOT NULL,
   RequestedBy varchar(32) NOT NULL,
+  PRIMARY KEY (RequestID),
   FOREIGN KEY (RequestedBy) REFERENCES USER(Username)
 );

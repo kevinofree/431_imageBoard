@@ -5,6 +5,7 @@
 <?php confirm_user_authentication(); ?>
 <?php
 
+
   $message_id = $_GET['msg-id'];
   $query = get_single_message($message_id);
   $username = $_SESSION['username'];
@@ -14,12 +15,11 @@
   $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
   $row = mysqli_fetch_assoc($result);
 
-  /*
-  if($row['Receiver'] != $user || $row['Sender'] != $user)
+  //if you're trying to view another persons message
+  if($row['Receiver'] != $username || $row['Sender'] != $username)
   {
     redirect_to('inbox.php');
   }
-  */
 
   if($row['Status'] == 0)
   {

@@ -203,9 +203,9 @@
   //****************************************************
   //*********** Threads and Posts Queries **************
   //****************************************************
-  function get_related_threads($forumName)
+  function get_related_threads($user, $forumName)
   {
-    $query = "SELECT * FROM THREAD WHERE FName = '{$forumName}';";
+    $query = "SELECT * from THREAD LEFT JOIN RANK ON THREAD.ThreadNo = RANK.ThNo AND RANK.Username = '{$user}' WHERE THREAD.FName = '{$forumName}'";
     return $query;
   }
 
@@ -221,14 +221,14 @@
 
   function get_posts($threadNo)
   {
-    $query = "SELECT PostText, PostDate, Poster, PostNo, Photodata FROM POST WHERE ThreadNo = '{$threadNo}';";
+    $query = "SELECT PostText, PostDate, Poster, PostNo, Image FROM POST WHERE ThreadNo = '{$threadNo}';";
     return $query;
   }
 
   function post_reply($username, $post, $image, $threadNo)
   {
     $query  = "INSERT INTO POST (";
-    $query .= "Poster, PostText, Photodata, ThreadNo";
+    $query .= "Poster, PostText, Image, ThreadNo";
     $query .= ") VALUES (";
     $query .= "'{$username}', '{$post}', '{$image}' ,'{$threadNo}'";
     $query .= ");";
@@ -241,6 +241,28 @@
     return $query;
   }
 
+  function get_thread_info($tNO)
+  {
+    $query = "SELECT * from THREAD WHERE ThreadNo = $tNO";
+    return $query;
+  }
+
+  //null = unranked, 1 = thums up, 2 = thumsdown
+  function rank_thread($rankID, $user, $status, $threadno)
+  {
+    if ($rankID == '')
+    {
+      $query = "INSERT INTO RANK (Username, Ranking, ThNo) VALUES('{$user}', $status, $threadno)";
+      $query .= "ON DUPLICATE KEY UPDATE Ranking=$status";
+    }
+    else {
+      $query = "INSERT INTO RANK (RankID, Username, Ranking, ThNo) VALUES($rankID, '{$user}', $status, $threadno)";
+      $query .= "ON DUPLICATE KEY UPDATE Ranking=$status";
+    }
+    return $query;
+
+  }
+
   //****************************************************
   //**************** Moderator Queries *****************
   //****************************************************
@@ -250,6 +272,28 @@
   //****************************************************
   //************* Administrator Queries ****************
   //****************************************************
+  function view_requests(){
+    $query = "SELECT * FROM REQUESTS";
+    return $query;
+  }
 
+  function get_request($reqID)
+  {
+    $query = "SELECT * FROM REQUESTS WHERE RequestID ={$reqID}";
+    return $query;
+  }
+
+  function create_forum($forumname, $mod, $image, $description)
+  {
+    $query = "INSERT INTO FORUM (ForumName, Moderator, Picture, Description, Status)";
+    $query .= "VALUES ('{$forumname}', '{$mod}', '{$image}', '{$description}', 1);";
+    return $query;
+  }
+
+  function delete_request($reqID)
+  {
+    $query = "DELETE FROM REQUESTS WHERE RequestID = $reqID";
+    return $query;
+  }
 
 ?>

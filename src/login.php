@@ -41,6 +41,7 @@
     {
       // Store username in session
       $_SESSION['username'] = $user_credentials['Username'];
+      $_SESSION['status'] = $user_credentials['Status'];
 
       // Release returned data
       mysqli_free_result($result);

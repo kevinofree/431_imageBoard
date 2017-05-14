@@ -46,7 +46,9 @@
         while($forums=mysqli_fetch_assoc($result))
         {
           echo "<tr>";
-          echo "<td></td>";
+          echo "<td class='col-md-1'>";
+          echo '<img src="data:image/jpeg/;base64,' . base64_encode($forums['Picture']) . '" id="forum-pic-img" alt="forum-picture" height="100" width="100" />';
+          echo "</td>";
           echo "<td><a href='forums.php?forum={$forums['ForumName']}'>{$forums['ForumName']}</a></td>";
           echo "<td>{$forums['Description']}</td>";
           echo "</tr>";

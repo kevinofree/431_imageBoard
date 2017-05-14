@@ -26,6 +26,22 @@
     <li>
       <a href="sent.php">Sent</a>
     </li>
+    <?php
+      if($_SESSION['status'] == 2)
+      {
+        echo "
+        <li class='sidebar-brand'>
+          <a>Admin</a>
+        </li>
+        <li>
+          <a href='requests.php'>Forum Requests</a>
+        </li>
+        <li>
+          <a href='viewreq.php'>New Request</a>
+        </li>
+        ";
+      }
+     ?>
   </ul>
 </div>
 <!-- /#sidebar-wrapper -->

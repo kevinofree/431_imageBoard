@@ -30,4 +30,11 @@
     }
   }
 
+  function confirm_admin_authentication(){
+    if($_SESSION['status'] != 2)
+    {
+      redirect_to("index.php");
+    }
+  }
+
 ?>

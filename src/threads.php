@@ -10,6 +10,12 @@
   $query = get_posts($threadNo);
   $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
 
+  //Get Thread Info
+  $getThread = get_thread_info($threadNo);
+  $threadinfo = mysqli_query($connection, $getThread);
+  $threadres = mysqli_fetch_assoc($threadinfo);
+
+
   if(isset($_POST['post-submit']))
   {
     // Get form data
@@ -65,6 +71,7 @@
   </head>
   <body>
     <div clas="container-fluid">
+      <h1 class="text-center" style="font-family: 'Press Start 2P', cursive;"><?php echo $threadres['Title']; ?></h1>
         <div class="col-lg-5 col-lg-offset-3">
           <form method="POST" enctype="multipart/form-data">
             <?php
@@ -94,23 +101,33 @@
       <hr>
       <div class="container-fluid">
         <table class="table table-hover">
+          <thead>
+            <th>User</th>
+            <th>Image</th>
+            <th>Post</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </thead>
         <tbody>
           <?php
             while ($reply=mysqli_fetch_assoc($result)) {
+                $date = strtotime($reply['PostDate']);
                 echo "<tr>";
                 echo "<td><a href='profile.php?user={$reply['Poster']}'>{$reply['Poster']}</a></td>";
-                if($reply['Photodata'] != ""){
+                if($reply['Image'] != ""){
                   echo '<td><img src="data:image/jpeg/;base64,' .
-                        base64_encode($reply['Photodata']) .
+                        base64_encode($reply['Image']) .
                         '" height="300" width="300" /></td>';
                 }
                 else {
-                  echo "<td></td>";
+                  echo "<td> </td>";
                 }
                 echo "<td>{$reply['PostText']}</td>";
-                echo "<td>{$reply['PostDate']}</td>";
+                echo "<td>" . date('j F Y', $date) . "</td>";
                 if($_SESSION['username'] == $reply['Poster'] ){
                   echo "<td><a href='editpost.php?pid={$reply['PostNo']}&tid={$threadNo}'>Edit</a></td>";
+                }else {
+                  echo "<td></td>";
                 }
                 echo "</tr>";
             }
