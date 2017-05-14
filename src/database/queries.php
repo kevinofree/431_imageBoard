@@ -63,6 +63,7 @@
     return $query;
   }
 
+  //0 = norma, 1 = mod, 2 = admin
   function update_status($user, $status)
   {
     $query = "UPDATE USER SET Status = $status WHERE Username='{$user}'";

@@ -36,6 +36,19 @@
       $query = create_forum($forumName, $mod, $image, $descr);
       $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
       $_SESSION['approved'] = "The Forum Request was Approved";
+
+      unset($query);
+      unset($result);
+
+      //update user to mod status if the mod option is not an admin otherwise we made admin a mod
+      if($_SESSION['username'] == $mod && $_SESSION['status'] == 2)
+      {
+        //do nothing
+      }else {
+        $query = update_status($mod, 1);
+        $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+      }
+
     }else {
       $_SESSION['denied'] = "The Forum Request was Denied";
     }
@@ -45,6 +58,7 @@
     $result = mysqli_query($connection, $query);
   }
 
+  //if admin created the forum without a request
   if (isset($_POST['Create-Forum'])) {
     // Get form data
     $forumName = $_POST['ForumName'];
