@@ -45,6 +45,24 @@
     $result = mysqli_query($connection, $query);
   }
 
+  if (isset($_POST['Create-Forum'])) {
+    // Get form data
+    $forumName = $_POST['ForumName'];
+    $descr = $_POST['Description'];
+    $mod = $_POST['mod'];
+    $image = addslashes(file_get_contents($_FILES['upload-image']['tmp_name']));
+    $option = $_POST['choice'];
+    $reqID = $_POST['request-id'];
+
+    $query = create_forum($forumName, $mod, $image, $descr);
+    $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+
+    unset($query);
+    $query = delete_request($reqID);
+    $result = mysqli_query($connection, $query);
+  }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +139,7 @@
                             ?>
                           <div class="form-group">
                             <label for="upload-image">Select A Forum Image</label>
-                            <input type="file" name="upload-image" id="upload-image" required>
+                            <input type="file" name="upload-image" id="upload-image">
                           </div>
                           <button type="submit" name="<?php echo $button ?>" class="btn btn-primary"><?php echo $buttontxt; ?></button>
                         </form>

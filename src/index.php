@@ -32,6 +32,12 @@
     </div>
 
   <!-- Content here -->
+  <?php
+    if(isset($_SESSION['banned']))
+    {
+      echo '<div class="alert alert-danger text-center">' . $_SESSION['banned'] . '</div>';
+    }
+  ?>
     <div class="container-fluid">
       <h1>Forums</h1>
       <a id="post_thread"  class="btn btn-default pull-right" href="request.php">Request New Forum</a>
@@ -67,5 +73,6 @@
 </html>
 
 <?php
+  unset($_SESSION['banned']);
   require_once('./database/close-connection.php');
 ?>

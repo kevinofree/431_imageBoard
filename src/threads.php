@@ -15,6 +15,12 @@
   $threadinfo = mysqli_query($connection, $getThread);
   $threadres = mysqli_fetch_assoc($threadinfo);
 
+  //get moderator
+  $modquery = get_mod($threadres['FName']);
+  $modresult = mysqli_query($connection, $modquery);
+  $modPerson = mysqli_fetch_assoc($modresult);
+  $mod = $modPerson['Moderator'];
+
 
   if(isset($_POST['post-submit']))
   {
@@ -71,8 +77,24 @@
   </head>
   <body>
     <div clas="container-fluid">
-      <h1 class="text-center" style="font-family: 'Press Start 2P', cursive;"><?php echo $threadres['Title']; ?></h1>
         <div class="col-lg-5 col-lg-offset-3">
+          <h1 class="text-center" style="font-family: 'Press Start 2P', cursive;"><?php echo $threadres['Title']; ?></h1>
+            <form class="form-inline" action="threadaction.php" method="POST">
+              <div class="text-center">
+                <?php
+                  if($_SESSION['status'] == 2 or $mod == $_SESSION['username'])
+                  {
+                    echo"
+                      <input type='hidden' name='tid' value={$threadNo}>
+                      <button type='submit' class='btn btn-primary' name='action' value='lock'>Lock Thread</button>
+                      <button type='submit' class='btn btn-primary' name='action' value='close'>Close Thread</button>
+                      <button type='submit' class='btn btn-primary' name='action' value='unlock'>Unlock Thread</button>
+                      ";
+                  }
+
+                ?>
+              </div>
+          </form>
           <form method="POST" enctype="multipart/form-data">
             <?php
               if(isset($_SESSION['success_message']))
@@ -83,17 +105,24 @@
               {
                 echo '<div class="alert alert-danger text-center">' . $_SESSION['fail_message'] . '</div>';
               }
+              if(isset($_SESSION['banned']))
+              {
+                echo '<div class="alert alert-danger text-center">' . $_SESSION['banned'] . '</div>';
+              }
+
             ?>
             <br>
-            <div class="form-group">
-              <label for="content">Reply</label>
-                <textarea class="form-control" rows="5" name ="content" placeholder="Reply text here..." required></textarea>
-            </div>
-            <div class="form-group">
-              <input type="file" name="image">
-            </div>
-            <hr>
-            <button type="submit" name="post-submit" class="btn btn-primary">Submit</button>
+            <?php if($threadres['Status'] == 0){ ?>
+                <div class="form-group">
+                  <label for="content">Reply</label>
+                    <textarea class="form-control" rows="5" name ="content" placeholder="Reply text here..." required></textarea>
+                </div>
+                <div class="form-group">
+                  <input type="file" name="image">
+                </div>
+                <hr>
+                <button type="submit" name="post-submit" class="btn btn-primary">Submit</button>
+              <?php } else echo '<div class="text-center"><i class="fa fa-lock" style="font-size: 100px;" aria-hidden="true"></i></div>'?>
           </form>
           <br>
         </div>
@@ -124,7 +153,16 @@
                 }
                 echo "<td>{$reply['PostText']}</td>";
                 echo "<td>" . date('j F Y', $date) . "</td>";
-                if($_SESSION['username'] == $reply['Poster'] ){
+                if($mod == $_SESSION['username'])
+                {
+                  echo "<td class='col-md-2'><a href='editpost.php?pid={$reply['PostNo']}&tid={$threadNo}'>Edit </a>";
+                  echo "<a href='banuser.php?user={$reply['Poster']}&tid={$threadNo}'>Ban User </a>";
+                  echo "<a href='deletepost.php?pid={$reply['PostNo']}&tid={$threadNo}'>Delete Post</a></td>";
+                }elseif ($_SESSION['status'] == 2) {
+                  echo "<td class='col-md-2'><a href='editpost.php?pid={$reply['PostNo']}&tid={$threadNo}'>Edit </a>";
+                  echo "<a href='banuser.php?user={$reply['Poster']}&tid={$threadNo}'>Ban User </a>";
+                  echo "<a href='deletepost.php?pid={$reply['PostNo']}&tid={$threadNo}'>Delete Post</a></td>";
+                }elseif($_SESSION['username'] == $reply['Poster']){
                   echo "<td><a href='editpost.php?pid={$reply['PostNo']}&tid={$threadNo}'>Edit</a></td>";
                 }else {
                   echo "<td></td>";
@@ -143,6 +181,7 @@
   unset($_SESSION['register_page']);
   unset($_SESSION['success_message']);
   unset($_SESSION['fail_message']);
+  unset($_SESSION['banned']);
 
   require_once('./database/close-connection.php');
 ?>

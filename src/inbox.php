@@ -39,7 +39,8 @@
   <body>
     <?php include "navbar.php" ?>
     <div id="wrapper">
-      <?php include "sidebar.php"; ?>
+      <?php include "sidebar.php"; ?>   
+
       <div id="page-content-wrapper">
         <div class="container-fluid">
           <div class="row">

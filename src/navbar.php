@@ -73,6 +73,7 @@
         <li><a href="index.php">Home</a></li>
         <li><a href="#">Rules</a></li>
         <li><a href="#">FAQ</a></li>
+        <!--
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boards <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -89,6 +90,7 @@
           </ul>
         </li>
         <li><a href="#">Contact</a></li>
+      -->
         <?php
           if(isset($_SESSION['username']))
           {

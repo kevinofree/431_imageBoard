@@ -6,6 +6,18 @@
   // Check whether the user is logged in.
   confirm_user_authentication();
   $forumtype = $_GET['forum'];
+
+  //check if the user is banned
+  $query = check_ban($_SESSION['username'], $forumtype);
+  $result = mysqli_query($connection, $query);
+  if(mysqli_num_rows($result) != 0){
+    $_SESSION['banned'] = "You Are BANNED from {$forumtype}";
+    redirect_to('index.php');
+  }
+
+  unset($query);
+  unset($result);
+
   $query = get_related_threads($_SESSION['username'], $forumtype);
   $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
 

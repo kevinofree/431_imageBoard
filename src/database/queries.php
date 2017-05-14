@@ -63,6 +63,12 @@
     return $query;
   }
 
+  function update_status($user, $status)
+  {
+    $query = "UPDATE USER SET Status = $status WHERE Username='{$user}'";
+    return $query;
+  }
+
   //****************************************************
   //************* Chatroom Feature Queries *************
   //****************************************************
@@ -200,12 +206,24 @@
     return $query;
   }
 
+  function check_ban($user, $fname)
+  {
+    $query = "SELECT * FROM BANNED WHERE FName='{$fname}' AND User='{$user}'";
+    return $query;
+  }
+
+  function get_mod($forum)
+  {
+    $query = "SELECT Moderator FROM FORUM WHERE ForumName='{$forum}'";
+    return $query;
+  }
+
   //****************************************************
   //*********** Threads and Posts Queries **************
   //****************************************************
   function get_related_threads($user, $forumName)
   {
-    $query = "SELECT * from THREAD LEFT JOIN RANK ON THREAD.ThreadNo = RANK.ThNo AND RANK.Username = '{$user}' WHERE THREAD.FName = '{$forumName}'";
+    $query = "SELECT * from THREAD LEFT JOIN RANK ON THREAD.ThreadNo = RANK.ThNo AND RANK.Username = '{$user}' WHERE THREAD.FName = '{$forumName}' AND THREAD.Status <> 2";
     return $query;
   }
 
@@ -267,6 +285,18 @@
   //**************** Moderator Queries *****************
   //****************************************************
 
+  function delete_post($postid)
+  {
+    $query = "DELETE FROM POST WHERE PostNo=$postid";
+    return $query;
+  }
+
+//0 = normal, 1=locked, 2 = closed
+function update_thread_status($tid, $status)
+{
+  $query = "UPDATE THREAD SET Status=$status WHERE ThreadNo=$tid";
+  return $query;
+}
 
 
   //****************************************************
@@ -293,6 +323,24 @@
   function delete_request($reqID)
   {
     $query = "DELETE FROM REQUESTS WHERE RequestID = $reqID";
+    return $query;
+  }
+
+  function set_mod($forum, $mod)
+  {
+    $query = "UPDATE FORUM SET Moderator='{$mod}' WHERE ForumName='{$forum}'";
+    return $query;
+  }
+
+  function get_forum_from_thread($threadNo)
+  {
+    $query = "SELECT FName from THREAD WHERE ThreadNo=$threadNo";
+    return $query;
+  }
+
+  function ban_user($forum, $user)
+  {
+    $query = "INSERT INTO BANNED (Fname, User) VALUES('{$forum}', '{$user}')";
     return $query;
   }
 

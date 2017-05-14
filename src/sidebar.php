@@ -37,7 +37,10 @@
           <a href='requests.php'>Forum Requests</a>
         </li>
         <li>
-          <a href='viewreq.php'>New Request</a>
+          <a href='viewreq.php'>New Forum</a>
+        </li>
+        <li>
+          <a href='newmod.php'>New Mod</a>
         </li>
         ";
       }

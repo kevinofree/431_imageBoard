@@ -37,4 +37,10 @@
     }
   }
 
+  function confirm_mod_auth(){
+    //allow status 2 since admins can do everything
+    if($_SESSION['status'] != 1 and $_SESSION['status'] != 2)
+      redirect_to("index.php");
+  }
+
 ?>
